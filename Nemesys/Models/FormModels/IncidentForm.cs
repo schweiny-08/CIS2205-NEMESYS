@@ -13,6 +13,13 @@ namespace Nemesys.Models.FormModels
             description = null;
         }
 
+        public IncidentForm(int idNum, int ownerID) {
+            this.idNum = idNum;
+            this.ownerID = ownerID;
+            dateTime = default;
+            description = "This is a description";
+        }
+
         public int idNum { set; get; }
         public DateTime dateTime { get; set; }
         public string description { get; set; }

@@ -17,6 +17,11 @@ namespace Nemesys.Models.UserModels
             investigations = new List<Investigation>();
         }
 
+        public Investigator(int idNum, string email, string password, string fName, string lName) : base(idNum, email, password, fName, lName)
+        {
+            investigations = new List<Investigation>();
+        }
+
         public int deptNum { set; get; }
 
         public void addInvestigation(Investigation inv) {

@@ -15,8 +15,19 @@ namespace Nemesys.Models.FormModels
         }
 
         public Report() : base()
-        {    
+        {
+            location = null;
+            upvotes = 0;
+            image = null;
+            status = Status.Open;
+        }
 
+        public Report(int idNum, int ownerID, string location, int upvotes) : base(idNum, ownerID)
+        {
+            this.location = location;
+            this.upvotes = upvotes;
+            image = null;
+            status = Status.Open;
         }
 
         public string location { get; set; }

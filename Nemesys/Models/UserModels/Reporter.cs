@@ -17,6 +17,11 @@ namespace Nemesys.Models.UserModels
             reports = new List<Report>(); 
         }
 
+        public Reporter(int idNum, string email, string password, string fName, string lName) : base(idNum, email, password, fName, lName)
+        {
+            reports = new List<Report>();
+        }
+
         public void addReport(Report report) {
             reports.Add(report);
         }

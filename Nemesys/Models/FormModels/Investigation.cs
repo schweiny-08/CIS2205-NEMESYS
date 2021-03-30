@@ -13,6 +13,11 @@ namespace Nemesys.Models.FormModels
             reportID = 0;
         }
 
+        public Investigation(int idNum, int ownerID, int reportID) : base(idNum, ownerID)
+        {
+            this.reportID = reportID;    
+        }
+
         public int reportID { get; set; }
 
         public void changeReportStatus() { 
