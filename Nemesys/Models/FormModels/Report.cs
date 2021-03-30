@@ -21,7 +21,7 @@ namespace Nemesys.Models.FormModels
 
         public string location { get; set; }
         public int upvotes { get; set; }
-        public byte[] iamge { get; set; }
+        public byte[] image { get; set; }
         public Status status { get; set; }
     }
 }
