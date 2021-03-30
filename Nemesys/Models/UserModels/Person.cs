@@ -7,7 +7,7 @@ namespace Nemesys.Models.UserModels
 {
     public abstract class Person
     {
-        public Person()
+        protected Person()
         {
             idNum = 0;
             email = password = fName = lName = null;
@@ -19,7 +19,7 @@ namespace Nemesys.Models.UserModels
         public string password { get; set; } 
         public string fName { get; set; }
         public string lName { get; set; }
-        private byte[] image { get; set; }
+        public byte[] image { get; set; }
 
     }
 }
