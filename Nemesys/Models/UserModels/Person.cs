@@ -14,6 +14,15 @@ namespace Nemesys.Models.UserModels
             image = null;
         }
 
+        protected Person(int idNum, string email, string password, string fName, string lName) {
+            this.idNum = idNum;
+            this.email = email;
+            this.password = password;
+            this.fName = fName;
+            this.lName = lName;
+            image = null;
+        }
+
         public int idNum { get; set; }
         public string email { get; set; }
         public string password { get; set; } 
