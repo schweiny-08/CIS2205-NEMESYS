@@ -10,11 +10,15 @@ namespace Nemesys.Models.UserModels
 {
     public class Reporter : Person
     {
+        public List<Report> reports;
+
         public Reporter() : base()
         {
             reports = new List<Report>(); 
         }
 
-        public List<Report> reports;
+        public void addReport(Report report) {
+            reports.Add(report);
+        }
     }
 }
