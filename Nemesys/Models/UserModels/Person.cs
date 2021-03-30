@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Nemesys.Models
+namespace Nemesys.Models.UserModels
 {
     public abstract class Person
     {
