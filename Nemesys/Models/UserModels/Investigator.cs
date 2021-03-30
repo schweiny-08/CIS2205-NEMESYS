@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Nemesys.Models
+namespace Nemesys.Models.UserModels
 {
     public class Investigator : Reporter
     {
