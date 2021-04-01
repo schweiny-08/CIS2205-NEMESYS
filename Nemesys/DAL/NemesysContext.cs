@@ -1,13 +1,14 @@
 ﻿using Nemesys.Models.FormModels;
 using Nemesys.Models.UserModels;
 
-using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Nemesys.DAL
 {
     public class NemesysContext : DbContext
     {
-        public NemesysContext(DbContextOptions<NemesysContext> options) : base(options)//"NemesysContext") // Setting the connection string
+        public NemesysContext() : base("NemesysContext") // Setting the connection string
         {
             
         }
@@ -17,11 +18,8 @@ namespace Nemesys.DAL
         public DbSet<Report> Reports { get; set; }
         public DbSet<Investigation> Investigations { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Reporter>().ToTable("Reporter");
-            modelBuilder.Entity<Investigator>().ToTable("Investigator");
-            modelBuilder.Entity<Report>().ToTable("Report");
-            modelBuilder.Entity<Investigation>().ToTable("Investigation");
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }

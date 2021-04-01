@@ -29,6 +29,5 @@ namespace Nemesys.Models.UserModels
         public string fName { get; set; }
         public string lName { get; set; }
         public byte[] image { get; set; }
-
     }
 }
