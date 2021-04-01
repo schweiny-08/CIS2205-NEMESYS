@@ -9,20 +9,19 @@ namespace Nemesys.Models.UserModels
 {
     public class Investigator : Reporter
     {
-        public List<Investigation> investigations;
-
         public Investigator() : base()
         {
             deptNum = 0;
-            investigations = new List<Investigation>();
         }
 
-        public Investigator(int idNum, string email, string password, string fName, string lName) : base(idNum, email, password, fName, lName)
+        public Investigator(int idNum, string email, string password, string fName, string lName, int deptNum) : base(idNum, email, password, fName, lName)
         {
-            investigations = new List<Investigation>();
+            this.deptNum = deptNum;
         }
 
         public int deptNum { set; get; }
+
+        public virtual ICollection<Investigation> investigations {get; set;}
 
         public void addInvestigation(Investigation inv) {
             investigations.Add(inv);
