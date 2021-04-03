@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -24,6 +25,7 @@ namespace Nemesys.Models.UserModels
             image = null;
         }
 
+        [Key]
         public int idNum { get; set; }
         public string email { get; set; }
         public string password { get; set; }
