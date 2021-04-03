@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -21,7 +22,7 @@ namespace Nemesys.Models.FormModels
             dateTime = default;
             description = "This is a description";
         }
-
+        [Key]
         public int idNum { set; get; }
         public DateTime dateTime { get; set; }
         public string description { get; set; }
