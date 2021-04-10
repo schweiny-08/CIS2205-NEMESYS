@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form class="text-center">
+    <div>
+        <h1>Create An Account</h1>
+
+        <hr />
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required />
+
+        <label for="fName"><b>First Name</b></label>
+        <input type="text" placeholder="Enter First Name" name="fName" id="fName" required />
+
+        <label for="lName"><b>Last Name</b></label>
+        <input type="text" placeholder="Enter Last Name" name="lName" id="lName" required />
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required />
+
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required />
+
+        <!--<p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>-->
+        <button type="submit" class="registerbtn">Register</button>
+    </div>
+
+    <div class="text-center">
+        <p>Already have an account? <a class="btn-link" onclick="@("window.location.href='" + @Url.Action("Login", "Home") + "'");">Sign in</a>.</p>
+    </div>
+</form>
