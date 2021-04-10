@@ -2,19 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-center jumbotron">
     <h1 class="display-4">Welcome</h1>
-<<<<<<< Updated upstream
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-=======
     <h2 class="display-4">to</h2>
     <h3 class="display-1">Nemesys</h3>
     <h4 class="h2">Near Miss Exposure and Reporting System!</h4>
     <p>Report or view reports about any hazards on campus!</p>
     <!--<button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='<%= Url.Action("Login", "HomeController")%>';">Login</button>-->
     <input type="button" class="btn btn-primary btn-lg" value="Login" onclick="@("window.location.href='" + @Url.Action("Login", "Home") + "'");" />
+
     <!--<button type="button" class="btn btn-primary btn-lg">Register</button>-->
     <input type="button"class="btn btn-primary btn-lg" value="Register" onclick="@("window.location.href= '" + @Url.Action("Register", "Home") + "'");"/>
->>>>>>> Stashed changes
 </div>
 

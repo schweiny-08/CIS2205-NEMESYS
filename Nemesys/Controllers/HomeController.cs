@@ -28,8 +28,6 @@ namespace Nemesys.Controllers
             return View();
         }
 
-<<<<<<< Updated upstream
-=======
         public IActionResult Login() {
             return View();
         }
@@ -38,7 +36,6 @@ namespace Nemesys.Controllers
             return View();
         }
 
->>>>>>> Stashed changes
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
