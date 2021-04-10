@@ -10,5 +10,8 @@
     <p>Report or view reports about any hazards on campus!</p>
     <!--<button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='<%= Url.Action("Login", "HomeController")%>';">Login</button>-->
     <input type="button" class="btn btn-primary btn-lg" value="Login" onclick="@("window.location.href='" + @Url.Action("Login", "Home") + "'");" />
-    <button type="button" class="btn btn-primary btn-lg">Register</button>
+
+    <!--<button type="button" class="btn btn-primary btn-lg">Register</button>-->
+    <input type="button"class="btn btn-primary btn-lg" value="Register" onclick="@("window.location.href= '" + @Url.Action("Register", "Home") + "'");"/>
 </div>
+
