@@ -24,5 +24,7 @@ namespace Nemesys.DAL
             modelBuilder.Entity<Report>().ToTable("Report");
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
         }
+
+        public DbSet<Nemesys.Models.UserModels.Person> Person { get; set; }
     }
 }
