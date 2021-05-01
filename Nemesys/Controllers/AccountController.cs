@@ -30,8 +30,25 @@ namespace Nemesys.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login() {
-            return View();
+        public IActionResult Login([Bind("email, password")] LoginViewModel userLogin) {
+            if (ModelState.IsValid)
+            {
+                var user = _nemesysRepositroy.GetReporterByEmail(userLogin.email);
+
+                if (user != null)
+                {
+                    // User with matching email found
+                    var password = user.password;
+                    if (password == userLogin.password)
+                    {
+                        ViewData["IsLoggedIn"] = true;
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                        return View(userLogin);
+                }
+            }
+            return View(userLogin);
         }
 
         [HttpGet]

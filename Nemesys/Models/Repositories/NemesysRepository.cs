@@ -31,6 +31,10 @@ namespace Nemesys.Models.Repositories
             return _nemesysContext.Reporters.Include(r => r.reports).FirstOrDefault(r => r.idNum == userId);
         }
 
+        public Reporter GetReporterByEmail(string email) {
+            return _nemesysContext.Reporters.FirstOrDefault(r => r.email == email);
+        }
+
         public void AddNewReporter(Reporter reporter)
         {
             _nemesysContext.Reporters.Add(reporter);
