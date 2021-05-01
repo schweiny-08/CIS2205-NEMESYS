@@ -19,33 +19,51 @@ namespace Nemesys.Models.Repositories
             _nemesysContext = nemesysContext;
         }
 
-        public Investigator AddNewInvestigator(Investigator investigator)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Reporter AddNewReporter(Reporter reporter)
-        {
-            throw new NotImplementedException();
-        }
-        public bool DeleteInvestigator(Investigator investigator)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteReporter(Reporter reporter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Investigator> GetAllInvestigators()
-        {
-            return _nemesysContext.Investigators.Include(i => i.fName + i.lName).OrderBy(i => i.idNum);
-        }
+        // Reporters
 
         public IEnumerable<Reporter> GetAllReporters()
         {
             return _nemesysContext.Reporters.Include(r => r.fName + r.lName).OrderBy(r => r.idNum);
+        }
+
+        public Reporter GetReporterById(int userId)
+        {
+            return _nemesysContext.Reporters.Include(r => r.reports).FirstOrDefault(r => r.idNum == userId);
+        }
+
+        public void AddNewReporter(Reporter reporter)
+        {
+            _nemesysContext.Reporters.Add(reporter);
+            _nemesysContext.SaveChanges();
+        }
+
+        public void UpdateReporter(Reporter reporter)
+        {
+            var existingReporter = _nemesysContext.Reporters.SingleOrDefault(r => r.idNum == reporter.idNum);
+            if (existingReporter != null){ // Reporter exists 
+                existingReporter.email = reporter.email;
+                existingReporter.password = reporter.password;
+                existingReporter.fName = reporter.fName;
+                existingReporter.lName = reporter.lName;
+                existingReporter.image = reporter.image;
+
+                _nemesysContext.Entry(existingReporter).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+            }
+        }
+
+        public void DeleteReporter(Reporter reporter)
+        {
+            _nemesysContext.Reporters.Remove(reporter);
+            _nemesysContext.SaveChanges();
+            //throw new NotImplementedException();
+        }
+
+        // Investigators
+
+        public IEnumerable<Investigator> GetAllInvestigators()
+        {
+            return _nemesysContext.Investigators.Include(i => i.fName + i.lName).OrderBy(i => i.idNum);
         }
 
         public Investigator GetInvestigatorById(int userId)
@@ -53,19 +71,32 @@ namespace Nemesys.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public Reporter GetReporterById(int userId)
+        public void AddNewInvestigator(Investigator investigator)
         {
-            throw new NotImplementedException();
-        }
+            _nemesysContext.Investigators.Add(investigator);
+            _nemesysContext.SaveChanges();
+        } 
 
-        public bool UpdateInvestigator(Investigator investigator)
+        public void UpdateInvestigator(Investigator investigator)
         {
-            throw new NotImplementedException();
-        }
+            var existingInvestigator = _nemesysContext.Investigators.SingleOrDefault(i => i.idNum == investigator.idNum);
+            if (existingInvestigator != null)
+            { // Reporter exists 
+                existingInvestigator.email = investigator.email;
+                existingInvestigator.password = investigator.password;
+                existingInvestigator.fName = investigator.fName;
+                existingInvestigator.lName = investigator.lName;
+                existingInvestigator.image = investigator.image;
+                existingInvestigator.deptNum = investigator.deptNum;
 
-        public bool UpdateReporter(Reporter reporter)
+                _nemesysContext.Entry(existingInvestigator).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+            }
+        }
+        public void DeleteInvestigator(Investigator investigator)
         {
-            throw new NotImplementedException();
+            _nemesysContext.Investigators.Remove(investigator);
+            _nemesysContext.SaveChanges();
         }
     }
 }

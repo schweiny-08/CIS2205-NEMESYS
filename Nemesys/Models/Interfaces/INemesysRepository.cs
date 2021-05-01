@@ -8,19 +8,20 @@ namespace Nemesys.Models.Interfaces
 {
     public interface INemesysRepository
     {
+        // Reporters
+
         IEnumerable<Reporter> GetAllReporters();
         Reporter GetReporterById(int userId);
+        void AddNewReporter(Reporter reporter);
+        void UpdateReporter(Reporter reporter);
+        void DeleteReporter(Reporter reporter);
+
+        // Investigators
 
         IEnumerable<Investigator> GetAllInvestigators();
         Investigator GetInvestigatorById(int userId);
-
-        Reporter AddNewReporter(Reporter reporter);
-        Investigator AddNewInvestigator(Investigator investigator);
-
-        bool UpdateReporter(Reporter reporter);
-        bool UpdateInvestigator(Investigator investigator);
-
-        bool DeleteReporter(Reporter reporter);
-        bool DeleteInvestigator(Investigator investigator);
+        void AddNewInvestigator(Investigator investigator);
+        void UpdateInvestigator(Investigator investigator);
+        void DeleteInvestigator(Investigator investigator);
     }
 }
