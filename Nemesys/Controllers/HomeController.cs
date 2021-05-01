@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Nemesys.DAL;
 using Nemesys.Models;
+using Nemesys.Models.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,7 +29,7 @@ namespace Nemesys.Controllers
         {
             return View();
         }
-
+/*
         public IActionResult Login() {
             return View();
         }
@@ -40,6 +42,6 @@ namespace Nemesys.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        }*/
     }
 }

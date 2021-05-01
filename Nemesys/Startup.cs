@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 using Nemesys.DAL;
+using Nemesys.Models.Interfaces;
+using Nemesys.Models.Repositories;
 
 namespace Nemesys
 {
@@ -29,6 +31,8 @@ namespace Nemesys
         {
             services.AddDbContext<NemesysContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NemesysDBConnection")));
+
+            services.AddTransient<INemesysRepository, NemesysRepository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -49,6 +53,7 @@ namespace Nemesys
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseStatusCodePages();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -57,6 +62,12 @@ namespace Nemesys
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "root",
+                    pattern: "{action}",
+                    defaults: new { controller = "Home", action="Index"}
+                    );
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

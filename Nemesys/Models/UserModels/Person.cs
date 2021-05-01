@@ -27,10 +27,20 @@ namespace Nemesys.Models.UserModels
 
         [Key]
         public int idNum { get; set; }
+
+        [Required]
+        [EmailAddress]
         public string email { get; set; }
+        
+        [Required]
         public string password { get; set; }
+        
+        [Required]
         public string fName { get; set; }
+        
+        [Required]
         public string lName { get; set; }
-        public byte[] image { get; set; }
+        
+        public string image { get; set; }
     }
 }
