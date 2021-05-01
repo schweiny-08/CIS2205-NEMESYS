@@ -12,6 +12,7 @@ namespace Nemesys.Models.Interfaces
 
         IEnumerable<Reporter> GetAllReporters();
         Reporter GetReporterById(int userId);
+        Reporter GetReporterByEmail(string email);
         void AddNewReporter(Reporter reporter);
         void UpdateReporter(Reporter reporter);
         void DeleteReporter(Reporter reporter);
