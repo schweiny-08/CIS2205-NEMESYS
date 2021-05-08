@@ -41,6 +41,8 @@ namespace Nemesys.Controllers
                     var password = user.password;
                     if (password == userLogin.password)
                     {
+                        //ViewData["UserID"] = user.idNum;
+                        HttpContext.Session.Set(UserSession, user);
                         ViewData["IsLoggedIn"] = true;
                         return RedirectToAction("Index", "Home");
                     }
