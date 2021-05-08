@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nemesys.Models.ViewModels
 {
-    public class InvestigatorViewModel
+    public class ProfileViewModel
     {
         public int idNum { get; set; }
         public string email { get; set; }
