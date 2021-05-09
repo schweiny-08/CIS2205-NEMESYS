@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nemesys.DAL;
+using Nemesys.Models.FormModels;
 using Nemesys.Models.Interfaces;
 using Nemesys.Models.UserModels;
 using System;
@@ -102,5 +103,83 @@ namespace Nemesys.Models.Repositories
             _nemesysContext.Investigators.Remove(investigator);
             _nemesysContext.SaveChanges();
         }
+
+        // Reports
+
+        public IEnumerable<Report> GetAllReports()
+        {
+            return _nemesysContext.Reports.Include(r => r.status).OrderBy(r => r.dateTime);
+        }
+
+        public IEnumerable<Report> GetReportsByOwner(Reporter reporter)
+        {
+            return _nemesysContext.Reports.Include(r => r.status).Where(r => r.ownerID == reporter.idNum);
+        }
+
+        public Report GetReportById(int idNum)
+        {
+            return _nemesysContext.Reports.Include(r => r.status).FirstOrDefault(r => r.idNum == idNum);
+        }
+
+        public void AddNewReport(Report report)
+        {
+            _nemesysContext.Reports.Add(report);
+            _nemesysContext.SaveChanges();
+        }
+
+        public void UpdateReport(Report report)
+        {
+            var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == report.idNum);
+            if(existingReport != null){
+                existingReport.location = report.location;
+                existingReport.description = report.description;
+                existingReport.image = report.image;
+            }
+        }
+
+        public void DeleteReport(Report report)
+        {
+            _nemesysContext.Reports.Remove(report);
+            _nemesysContext.SaveChanges();
+        }
+
+        // Investigations
+
+        public IEnumerable<Investigation> GetAllInvestigations()
+        {
+            return _nemesysContext.Investigations.OrderBy(i => i.dateTime);
+        }
+
+        public IEnumerable<Investigation> GetInvestigationsByOwner(Investigator investigator)
+        {
+            return _nemesysContext.Investigations.Where(i => i.ownerID == investigator.idNum);
+        }
+
+        public Investigation GetInvestigationById(int idNum)
+        {
+            return _nemesysContext.Investigations.FirstOrDefault(i => i.idNum == idNum);
+        }
+
+        public void AddNewInvestigation(Investigation investigation)
+        {
+            _nemesysContext.Investigations.Add(investigation);
+        }
+
+        public void UpdateInvestigation(Investigation investigation)
+        {
+            var existingInvestigation = _nemesysContext.Investigations.SingleOrDefault(i => i.idNum == investigation.idNum);
+            if (existingInvestigation != null) {
+                existingInvestigation.dateTime = investigation.dateTime;
+                existingInvestigation.description = investigation.description;
+                existingInvestigation.reportID = investigation.reportID;
+            }
+        }
+
+        public void DeleteInvestigation(Investigation investigation)
+        {
+            _nemesysContext.Investigations.Remove(investigation);
+            _nemesysContext.SaveChanges();
+        }
+
     }
 }
