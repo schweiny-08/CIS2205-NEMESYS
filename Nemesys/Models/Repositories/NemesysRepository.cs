@@ -98,6 +98,7 @@ namespace Nemesys.Models.Repositories
                 _nemesysContext.SaveChanges();
             }
         }
+
         public void DeleteInvestigator(Investigator investigator)
         {
             _nemesysContext.Investigators.Remove(investigator);
@@ -108,17 +109,17 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Report> GetAllReports()
         {
-            return _nemesysContext.Reports.Include(r => r.status).OrderBy(r => r.dateTime);
+            return _nemesysContext.Reports.OrderBy(r => r.dateTime);
         }
 
         public IEnumerable<Report> GetReportsByOwner(Reporter reporter)
         {
-            return _nemesysContext.Reports.Include(r => r.status).Where(r => r.ownerID == reporter.idNum);
+            return _nemesysContext.Reports.Include(r => r.status).Where(r => r.reporter == reporter);
         }
 
         public Report GetReportById(int idNum)
         {
-            return _nemesysContext.Reports.Include(r => r.status).FirstOrDefault(r => r.idNum == idNum);
+            return _nemesysContext.Reports.FirstOrDefault(r => r.idNum == idNum);
         }
 
         public void AddNewReport(Report report)
@@ -134,6 +135,41 @@ namespace Nemesys.Models.Repositories
                 existingReport.location = report.location;
                 existingReport.description = report.description;
                 existingReport.image = report.image;
+
+                _nemesysContext.Entry(existingReport).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+            }
+        }
+
+        public void ChangeReportStatus(Report report)
+        {
+            var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == report.idNum);
+            if (existingReport != null)
+            {
+                existingReport.status = report.status;
+
+                _nemesysContext.Entry(existingReport).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+            }
+        }
+
+        public void UpvoteReport(int reportId) { 
+            var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == reportId);
+            if (existingReport != null) {
+                existingReport.upvotes++;
+
+                _nemesysContext.Entry(existingReport).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+            }
+        }
+        
+        public void DownvoteReport(int reportId) { 
+            var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == reportId);
+            if (existingReport != null) {
+                existingReport.upvotes--;
+
+                _nemesysContext.Entry(existingReport).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
             }
         }
 
@@ -152,7 +188,7 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Investigation> GetInvestigationsByOwner(Investigator investigator)
         {
-            return _nemesysContext.Investigations.Where(i => i.ownerID == investigator.idNum);
+            return _nemesysContext.Investigations.Where(i => i.investigator == investigator);
         }
 
         public Investigation GetInvestigationById(int idNum)
@@ -163,6 +199,9 @@ namespace Nemesys.Models.Repositories
         public void AddNewInvestigation(Investigation investigation)
         {
             _nemesysContext.Investigations.Add(investigation);
+
+            //Send email
+            _nemesysContext.SaveChanges();
         }
 
         public void UpdateInvestigation(Investigation investigation)
@@ -171,7 +210,10 @@ namespace Nemesys.Models.Repositories
             if (existingInvestigation != null) {
                 existingInvestigation.dateTime = investigation.dateTime;
                 existingInvestigation.description = investigation.description;
-                existingInvestigation.reportID = investigation.reportID;
+                existingInvestigation.report = investigation.report;
+
+                _nemesysContext.Entry(existingInvestigation).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
             }
         }
 

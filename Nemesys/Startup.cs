@@ -34,7 +34,7 @@ namespace Nemesys
 
             services.AddTransient<INemesysRepository, NemesysRepository>();
 
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            //services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddControllersWithViews();
         }

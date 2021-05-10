@@ -1,0 +1,24 @@
+﻿@model Nemesys.ViewModels.ReportViewModel
+
+@{
+    ViewData["Title"] = "Report Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card jumbotron-fluid">
+     <div class="card-body">
+         <h2 class="card-title">@Model.Title</h2>
+         <p class="card-text">@Model.description</p>
+         <p class="small">Upvotes: @Model.upvotes</p>
+         <p class="small">@Model.location</p>
+         <p class="small text-warning">Status: @Model.status</p>
+         @*<p class="small"></p>*@
+     </div>
+    <img class="card-img-bottom" src="@Model.image" alt="Image for @Model.Title" />
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

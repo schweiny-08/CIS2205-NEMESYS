@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace Nemesys.Models.ViewModels
+namespace Nemesys.ViewModels
 {
     public class RegisterAccountViewModel
     {

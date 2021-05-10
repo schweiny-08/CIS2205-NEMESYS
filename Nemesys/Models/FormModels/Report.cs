@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nemesys.Models.UserModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,13 +18,14 @@ namespace Nemesys.Models.FormModels
 
         public Report() : base()
         {
+            title = "";
             location = null;
             upvotes = 0;
             image = null;
             status = Status.Open;
         }
 
-        public Report(int idNum, int ownerID, string location, int upvotes) : base(idNum, ownerID)
+        public Report(int idNum, Reporter reporter, string location, int upvotes) : base(idNum, reporter)
         {
             this.location = location;
             this.upvotes = upvotes;
@@ -31,9 +33,11 @@ namespace Nemesys.Models.FormModels
             status = Status.Open;
         }
 
+        public string title { get; set; }
         public string location { get; set; }
         public int upvotes { get; set; }
-        public byte[] image { get; set; }
+        public string image { get; set; }
         public Status status { get; set; }
+        public Reporter reporter { get; set; }
     }
 }

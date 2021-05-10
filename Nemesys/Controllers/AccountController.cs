@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Nemesys.Models.Interfaces;
 using Nemesys.Models.UserModels;
-using Nemesys.Models.ViewModels;
+using Nemesys.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
