@@ -39,5 +39,6 @@ namespace Nemesys.Models.FormModels
         public string image { get; set; }
         public Status status { get; set; }
         public Reporter reporter { get; set; }
+        public Investigation investigation { get; set; }
     }
 }

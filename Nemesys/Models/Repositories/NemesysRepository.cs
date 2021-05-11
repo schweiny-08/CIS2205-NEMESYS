@@ -24,7 +24,7 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Reporter> GetAllReporters()
         {
-            return _nemesysContext.Reporters.Include(r => r.fName + r.lName).OrderBy(r => r.idNum);
+            return _nemesysContext.Reporters.OrderBy(r => r.idNum);
         }
 
         public Reporter GetReporterById(int userId)
@@ -68,12 +68,12 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Investigator> GetAllInvestigators()
         {
-            return _nemesysContext.Investigators.Include(i => i.fName + i.lName).OrderBy(i => i.idNum);
+            return _nemesysContext.Investigators.OrderBy(i => i.idNum);
         }
 
         public Investigator GetInvestigatorById(int userId)
         {
-            throw new NotImplementedException();
+            return _nemesysContext.Investigators.Include(i => i.investigations).FirstOrDefault(i => i.idNum == userId);
         }
 
         public void AddNewInvestigator(Investigator investigator)
@@ -109,17 +109,17 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Report> GetAllReports()
         {
-            return _nemesysContext.Reports.OrderBy(r => r.dateTime);
+            return _nemesysContext.Reports.Include(r => r.reporter).OrderBy(r => r.dateTime);
         }
 
         public IEnumerable<Report> GetReportsByOwner(Reporter reporter)
         {
-            return _nemesysContext.Reports.Include(r => r.status).Where(r => r.reporter == reporter);
+            return _nemesysContext.Reports.Include(r => r.reporter).Include(r => r.investigation).Where(r => r.reporter == reporter);
         }
 
         public Report GetReportById(int idNum)
         {
-            return _nemesysContext.Reports.FirstOrDefault(r => r.idNum == idNum);
+            return _nemesysContext.Reports.Include(r => r.reporter).Include(r => r.investigation).FirstOrDefault(r => r.idNum == idNum);
         }
 
         public void AddNewReport(Report report)
@@ -183,17 +183,17 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Investigation> GetAllInvestigations()
         {
-            return _nemesysContext.Investigations.OrderBy(i => i.dateTime);
+            return _nemesysContext.Investigations.Include(i => i.investigator).OrderBy(i => i.dateTime);
         }
 
         public IEnumerable<Investigation> GetInvestigationsByOwner(Investigator investigator)
         {
-            return _nemesysContext.Investigations.Where(i => i.investigator == investigator);
+            return _nemesysContext.Investigations.Include(i => i.investigator).Include(i => i.report).Where(i => i.investigator == investigator);
         }
 
         public Investigation GetInvestigationById(int idNum)
         {
-            return _nemesysContext.Investigations.FirstOrDefault(i => i.idNum == idNum);
+            return _nemesysContext.Investigations.Include(i => i.investigator).Include(i => i.report).FirstOrDefault(i => i.idNum == idNum);
         }
 
         public void AddNewInvestigation(Investigation investigation)
