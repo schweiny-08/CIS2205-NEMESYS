@@ -10,6 +10,7 @@ using Nemesys.DAL;
 using Nemesys.Models.FormModels;
 using Nemesys.Models.Interfaces;
 using Nemesys.ViewModels;
+using Nemesys.ViewModels.Investigations;
 using Nemesys.ViewModels.Reports;
 
 namespace Nemesys.Controllers
@@ -51,17 +52,48 @@ namespace Nemesys.Controllers
                 return NotFound();
             else
             {
-                var model = new ReportViewModel() {
-                    Id = report.idNum,
-                    Title = report.title,
-                    dateTime = report.dateTime,
-                    description = report.description,
-                    location = report.location,
-                    upvotes = report.upvotes,
-                    image = report.image,
-                    status = report.status.ToString()
-                    //reporter = new ReportViewModel(){}
-                };
+                ReportViewModel model;
+                if (report.investigation != null)
+                {
+                    model = new ReportViewModel()
+                    {
+                        Id = report.idNum,
+                        Title = report.title,
+                        dateTime = report.dateTime,
+                        description = report.description,
+                        location = report.location,
+                        upvotes = report.upvotes,
+                        image = report.image,
+                        status = report.status.ToString(),
+                        investigation = new InvestigationViewModel()
+                        {
+                            Id = report.investidationId,
+                            dateTime = report.investigation.dateTime,
+                            description = report.investigation.description,
+                        }
+                        //reporter = new ReportViewModel(){}
+                    };
+                }
+                else {
+                    model = new ReportViewModel()
+                    {
+                        Id = report.idNum,
+                        Title = report.title,
+                        dateTime = report.dateTime,
+                        description = report.description,
+                        location = report.location,
+                        upvotes = report.upvotes,
+                        image = report.image,
+                        status = report.status.ToString(),
+                        /*investigation = new InvestigationViewModel()
+                        {
+                            Id = report.investidationId,
+                            dateTime = report.investigation.dateTime,
+                            description = report.investigation.description,
+                        }*/
+                        //reporter = new ReportViewModel(){}
+                    };
+                }
                 return View(model);
             }
         }
@@ -152,7 +184,8 @@ namespace Nemesys.Controllers
                     image = "/images/reportimages/" + fileName,
                     upvotes = 0,
                     status = Report.Status.Open,
-                    reporter = null
+                    reporteridNum = 1,
+                    investidationId = 1
                 };
 
                 _nemesysRepository.AddNewReport(report);
@@ -162,5 +195,15 @@ namespace Nemesys.Controllers
                 return View(newReport);
         }
 
+        [HttpDelete]
+        public IActionResult Delete(int id) {
+            var reportToDelete = _nemesysRepository.GetReportById(id);
+            if (reportToDelete == null)
+                return NotFound();
+            if (reportToDelete.investigation != null)
+                _nemesysRepository.DeleteInvestigation(reportToDelete.investigation);
+            _nemesysRepository.DeleteReport(reportToDelete);
+            return RedirectToAction("Index");
+        }
     }
 }

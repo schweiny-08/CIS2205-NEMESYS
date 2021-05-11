@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -25,6 +26,7 @@ namespace Nemesys.Models.FormModels
             description = "This is a description";
         }
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idNum { set; get; }
         public DateTime dateTime { get; set; }
         public string description { get; set; }

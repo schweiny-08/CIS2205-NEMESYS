@@ -38,7 +38,9 @@ namespace Nemesys.Models.FormModels
         public int upvotes { get; set; }
         public string image { get; set; }
         public Status status { get; set; }
+        public int reporteridNum { get; set; }
         public Reporter reporter { get; set; }
+        public int investidationId { get; set; }
         public Investigation investigation { get; set; }
     }
 }

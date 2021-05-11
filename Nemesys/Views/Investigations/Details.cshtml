@@ -38,6 +38,12 @@
     </dl>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.idNum">Edit</a> *@
+
+    <a asp-action="Delete" asp-all-route-id="@Model.Id">Delete Investigation</a>
+    <br />
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
+    <br />
+    <a asp-controller="Reports" asp-action="Details" asp-route-id="@Model.report.Id">View Report</a>
+    <br />
     <a asp-action="Index">Back to List</a>
 </div>

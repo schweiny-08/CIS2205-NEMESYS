@@ -33,6 +33,7 @@ namespace Nemesys.Models.Interfaces
         Report GetReportById(int idNum);
         //Report GetReportByOwner(int idNm,int userId);
         void AddNewReport(Report report);
+        void AddInvestigationToReport(int reportId, int investigationId, int status);
         void UpdateReport(Report report);
         void ChangeReportStatus(Report report);
 

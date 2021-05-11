@@ -14,11 +14,18 @@
          <p class="small">Upvotes: @Model.upvotes</p>
          <p class="small">@Model.location</p>
          <p class="small text-warning">Status: @Model.status</p>
+         @if (Model.investigation != null)
+         { 
+           <a asp-controller="Investigations" asp-action="Details" asp-route-id="@Model.investigation.Id">View Investigation</a>
+         }
          @*<p class="small"></p>*@
      </div>
     <img class="card-img-bottom" src="@Model.image" alt="Image for @Model.Title" />
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <br />
     <a asp-action="Index">Back to List</a>
+    <br />
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger">Delete Report</a>
 </div>

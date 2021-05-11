@@ -128,6 +128,23 @@ namespace Nemesys.Models.Repositories
             _nemesysContext.SaveChanges();
         }
 
+        public void AddInvestigationToReport(int reportId, int investigationId, int status) {
+            var reportToUpdate = this.GetReportById(reportId);
+            if (reportToUpdate != null) {
+                reportToUpdate.investidationId = investigationId;
+
+                if (status == 1)
+                    reportToUpdate.status = Report.Status.Investigating;
+                else if (status == 2)
+                    reportToUpdate.status = Report.Status.NoAction;
+                else if (status == 3)
+                    reportToUpdate.status = Report.Status.Closed;
+
+                _nemesysContext.Entry(reportToUpdate).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+            }
+        }
+
         public void UpdateReport(Report report)
         {
             var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == report.idNum);

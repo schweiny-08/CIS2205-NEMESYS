@@ -1,4 +1,5 @@
 ﻿using Nemesys.Models.FormModels;
+using Nemesys.ViewModels.Investigations;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,9 @@ namespace Nemesys.ViewModels.Reports
         public int upvotes { get; set; }
         public string image { get; set; }
         public string status { get; set; }
+        /*public int investigationId { get; set; }*/
+        public InvestigationViewModel investigation{ get; set; }
+
         //ReporterViewModel Reporter { get; set; }
     }
 }

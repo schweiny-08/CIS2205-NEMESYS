@@ -1,7 +1,7 @@
-﻿@model Nemesys.Models.FormModels.Investigation
+﻿@model Nemesys.ViewModels.Investigations.CreateEditInvestigationViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Investigation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,19 +11,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="investigatorId" class="control-label"></label>
-                <select asp-for="investigatorId" class="form-control" asp-items="ViewBag.investigatorId"></select>
-                <span asp-validation-for="investigatorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="reportId" class="control-label"></label>
-                <select asp-for="reportId" class="form-control" asp-items="ViewBag.reportId"></select>
-                <span asp-validation-for="reportId" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="idNum" />
+        <form asp-action="Edit" method="post" role="form" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="dateTime" class="control-label"></label>
                 <input asp-for="dateTime" class="form-control" />
@@ -35,14 +25,24 @@
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="reportStatus" class="control-label"></label>
+                @*<input asp-for="reportStatus" class="form-control" />*@
+                <br />Being Investigated: @Html.RadioButtonFor(m => m.reportStatus, "Being Investigated")
+                <br />No Action Needed: @Html.RadioButtonFor(m => m.reportStatus, "No Action Needed")
+                <br />Closed: @Html.RadioButtonFor(m => m.reportStatus, "Closed")
+                <span asp-validation-for="reportStatus" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Update Investigation" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Investigations" asp-action="Details" asp-route-id="@Model.Id">Back to Investigation</a>
 </div>
 
 @section Scripts {

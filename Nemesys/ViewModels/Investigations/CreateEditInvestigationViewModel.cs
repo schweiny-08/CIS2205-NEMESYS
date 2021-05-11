@@ -20,6 +20,7 @@ namespace Nemesys.ViewModels.Investigations
         [Display(Name = "Investigation Description")]
         public string description { get; set; }
 
+        [Required(ErrorMessage = "Please choose a report status")]
         [Display(Name = "Change report status to:")]
         public string reportStatus { get; set; }
 

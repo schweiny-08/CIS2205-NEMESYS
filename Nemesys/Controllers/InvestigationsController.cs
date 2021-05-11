@@ -120,12 +120,23 @@ namespace Nemesys.Controllers
                     dateTime = newInvestigation.dateTime,
                     description = newInvestigation.description,
                     investigatorId = 2, //hard coded
-                    reportId = 1 //hard coded
+                    reportId = 3 //hard coded
                 };
 
+                int status = 0;
+                if (String.Equals(newInvestigation.reportStatus, "Being Investigated"))
+                    status = 1;
+                //investigation.report.status = Report.Status.Investigating;
+                else if (String.Equals(newInvestigation.reportStatus, "No Action Needed"))
+                    status = 2;
+                //investigation.report.status = Report.Status.NoAction;
+                else if (String.Equals(newInvestigation.reportStatus, "Closed"))
+                    status = 3;
+                    //investigation.report.status = Report.Status.Closed;
                 //CHECK IF REPORT HAS INVESTIGATION
 
                 _nemesysRepository.AddNewInvestigation(investigation);
+                _nemesysRepository.AddInvestigationToReport(investigation.reportId, investigation.idNum, status);
                 return RedirectToAction("Index");
             }
             else
@@ -133,60 +144,56 @@ namespace Nemesys.Controllers
         }
 
         // GET: Investigations/Edit/5
-        /* public async Task<IActionResult> Edit(int? id)
-         {
-             if (id == null)
-             {
-                 return NotFound();
-             }
-
-             var investigation = await _nemesysRepository.Investigations.FindAsync(id);
-             if (investigation == null)
-             {
-                 return NotFound();
-             }
-             ViewData["investigatorId"] = new SelectList(_nemesysRepository.Investigators, "idNum", "email", investigation.investigatorId);
-             ViewData["reportId"] = new SelectList(_nemesysRepository.Reports, "idNum", "idNum", investigation.reportId);
-             return View(investigation);
-         }*/
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var existingInvestigation = _nemesysRepository.GetInvestigationById(id);
+            if (existingInvestigation != null)
+            {
+                CreateEditInvestigationViewModel model = new CreateEditInvestigationViewModel()
+                {
+                    Id = existingInvestigation.idNum,
+                    dateTime = existingInvestigation.dateTime,
+                    description = existingInvestigation.description,
+                    reportStatus = existingInvestigation.report.status.ToString()
+                };
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index");
+        }
 
         // POST: Investigations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /*[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("investigatorId,reportId,idNum,dateTime,description")] Investigation investigation)
+        public IActionResult Edit(int id, [Bind("Id, dateTime, description, reportStatus")] CreateEditInvestigationViewModel updatedInvestigation)
         {
-            if (id != investigation.idNum)
-            {
+            var modelToUpdate = _nemesysRepository.GetInvestigationById(id);
+            if (modelToUpdate == null)
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _nemesysRepository.Update(investigation);
-                    await _nemesysRepository.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InvestigationExists(investigation.idNum))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                modelToUpdate.dateTime = updatedInvestigation.dateTime;
+                modelToUpdate.description = updatedInvestigation.description;
+
+                if (String.Equals(updatedInvestigation.reportStatus, "Being Investigated"))
+                    modelToUpdate.report.status = Report.Status.Investigating;
+                else if (String.Equals(updatedInvestigation.reportStatus, "No Action Needed"))
+                    modelToUpdate.report.status = Report.Status.NoAction;
+                else if (String.Equals(updatedInvestigation.reportStatus, "Closed"))
+                    modelToUpdate.report.status = Report.Status.Closed;
+
+                _nemesysRepository.UpdateInvestigation(modelToUpdate);
+                return RedirectToAction("Index");
             }
-            ViewData["investigatorId"] = new SelectList(_nemesysRepository.Investigators, "idNum", "email", investigation.investigatorId);
-            ViewData["reportId"] = new SelectList(_nemesysRepository.Reports, "idNum", "idNum", investigation.reportId);
-            return View(investigation);
+            else
+                return View(updatedInvestigation);
+            
         }
-*/
+
         // GET: Investigations/Delete/5
         /*public async Task<IActionResult> Delete(int? id)
         {
@@ -208,19 +215,20 @@ namespace Nemesys.Controllers
         }*/
 
         // POST: Investigations/Delete/5
-        /* [HttpPost, ActionName("Delete")]
-         [ValidateAntiForgeryToken]
-         public async Task<IActionResult> DeleteConfirmed(int id)
-         {
-             var investigation = await _nemesysRepository.Investigations.FindAsync(id);
-             _nemesysRepository.Investigations.Remove(investigation);
-             await _nemesysRepository.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
-         }*/
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var investigationToDelete = _nemesysRepository.GetInvestigationById(id);
+            if (investigationToDelete == null)
+                return NotFound();
+            _nemesysRepository.DeleteInvestigation(investigationToDelete);
+            return RedirectToAction("Index");
+        }
 
-        /*  private bool InvestigationExists(int id)
-          {
-              return _nemesysRepository.Investigations.Any(e => e.idNum == id);
-          }*/
+        /*private bool InvestigationExists(int id)
+        {
+            return _nemesysRepository.Investigations.Any(e => e.idNum == id);
+        }*/
     }
 }
