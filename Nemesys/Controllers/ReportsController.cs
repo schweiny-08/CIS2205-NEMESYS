@@ -10,6 +10,7 @@ using Nemesys.DAL;
 using Nemesys.Models.FormModels;
 using Nemesys.Models.Interfaces;
 using Nemesys.ViewModels;
+using Nemesys.ViewModels.Reports;
 
 namespace Nemesys.Controllers
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Nemesys.ViewModels
+namespace Nemesys.ViewModels.Reports
 {
     public class ReportViewModel
     {

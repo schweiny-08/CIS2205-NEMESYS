@@ -26,9 +26,9 @@ namespace Nemesys.DAL
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
         }
 
-        public DbSet<Nemesys.ViewModels.ReportViewModel> ReportViewModel { get; set; }
+        public DbSet<Nemesys.ViewModels.Reports.ReportViewModel> ReportViewModel { get; set; }
 
-        public DbSet<Nemesys.ViewModels.CreateEditReportViewModel> CreateEditReportViewModel { get; set; }
+        public DbSet<Nemesys.ViewModels.Reports.CreateEditReportViewModel> CreateEditReportViewModel { get; set; }
 
        /* public DbSet<Nemesys.Models.UserModels.Person> Person { get; set; }*/
     }

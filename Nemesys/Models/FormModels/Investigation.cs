@@ -21,7 +21,10 @@ namespace Nemesys.Models.FormModels
             this.report = report;
         }
 
+        public int investigatorId { get; set; }
         public Investigator investigator { get; set; }
+
+        public int reportId { get; set; }
         public Report report { get; set; }
         //public int reportID { get; set; }
 
