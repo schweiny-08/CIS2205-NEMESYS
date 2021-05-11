@@ -2,6 +2,7 @@
 using Nemesys.Models.UserModels;
 
 using Microsoft.EntityFrameworkCore;
+using Nemesys.ViewModels;
 
 namespace Nemesys.DAL
 {
@@ -25,6 +26,10 @@ namespace Nemesys.DAL
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
         }
 
+      /*  public DbSet<Nemesys.ViewModels.Reports.ReportViewModel> ReportViewModel { get; set; }
+
+        public DbSet<Nemesys.ViewModels.Reports.CreateEditReportViewModel> CreateEditReportViewModel { get; set; }
+*/
        /* public DbSet<Nemesys.Models.UserModels.Person> Person { get; set; }*/
     }
 }

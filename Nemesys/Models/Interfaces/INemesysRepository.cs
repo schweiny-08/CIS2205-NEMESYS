@@ -1,4 +1,5 @@
-﻿using Nemesys.Models.UserModels;
+﻿using Nemesys.Models.FormModels;
+using Nemesys.Models.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,29 @@ namespace Nemesys.Models.Interfaces
         void AddNewInvestigator(Investigator investigator);
         void UpdateInvestigator(Investigator investigator);
         void DeleteInvestigator(Investigator investigator);
+
+        // Reports
+
+        IEnumerable<Report> GetAllReports();
+        IEnumerable<Report> GetReportsByOwner(Reporter reporter);
+        Report GetReportById(int idNum);
+        //Report GetReportByOwner(int idNm,int userId);
+        void AddNewReport(Report report);
+        void AddInvestigationToReport(int reportId, int investigationId, int status);
+        void UpdateReport(Report report);
+        void ChangeReportStatus(Report report);
+
+        void UpvoteReport(int reportId);
+        void DownvoteReport(int reportId);
+        void DeleteReport(Report report);
+
+        // Investigations
+
+        IEnumerable<Investigation> GetAllInvestigations();
+        IEnumerable<Investigation> GetInvestigationsByOwner(Investigator investigator);
+        Investigation GetInvestigationById(int idNum);
+        void AddNewInvestigation(Investigation investigation);
+        void UpdateInvestigation(Investigation investigation);
+        void DeleteInvestigation(Investigation investigation);
     }
 }

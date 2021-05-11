@@ -4,30 +4,27 @@ using System.Linq;
 using System.Text;
 
 using Nemesys.Models.FormModels;
+using Nemesys.Models.UserModels;
+
 namespace Nemesys.Models.FormModels
 {
     public class Investigation : IncidentForm
     {
         public Investigation() : base()
         {
-            reportID = 0;
+            investigator = null;
         }
 
-        public Investigation(int idNum, int ownerID, int reportID) : base(idNum, ownerID)
+        public Investigation(int idNum, Investigator investigator, Report report) : base(idNum)
         {
-            this.reportID = reportID;
+            this.investigator = investigator;
+            this.report = report;
         }
 
-        public int reportID { get; set; }
+        public int investigatorId { get; set; }
+        public Investigator investigator { get; set; }
 
-        public void changeReportStatus()
-        {
-            //Report status is changed here
-        }
-
-        public void notifyReporter()
-        {
-            //Reporter is sent email
-        }
+        public int reportId { get; set; }
+        public Report report { get; set; }
     }
 }

@@ -1,0 +1,25 @@
+﻿@model Nemesys.ViewModels.Reports.ReportListViewModel
+
+@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h2>Shwowing @Model.TotalEntries reports.</h2>
+
+<div class="row">
+    @foreach(var report in Model.Reports)
+     {
+        <div class="card" style="width: 18rem; padding: 20px; margin: 20px">
+            <div class="card-body">
+                <h3 class="card-title">@report.Title</h3>
+                <p class="small">@report.dateTime.ToShortDateString()</p>
+                <p class="small">@report.upvotes</p>
+                <a asp-controller="Reports" asp-action="Details" asp-route-id="@report.Id" class="btn btn-primary">Report Details</a>
+            </div>
+            <!--<img />-->
+        </div>
+     }
+</div>
