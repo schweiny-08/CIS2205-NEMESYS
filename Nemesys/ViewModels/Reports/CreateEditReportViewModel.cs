@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Nemesys.Models.FormModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,6 +35,6 @@ namespace Nemesys.ViewModels.Reports
         [NotMapped]
         public IFormFile image { get; set; }
         public string imageUrl { get; set; }
-        //public string status { get; set; }
+        //public Report.Status status { get; set; }
     }
 }

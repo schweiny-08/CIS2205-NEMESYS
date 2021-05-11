@@ -38,8 +38,8 @@ namespace Nemesys.Controllers
                     description = r.description,
                     location = r.location,
                     upvotes = r.upvotes,
-                    image = r.image
-                    //status = r.status.ToString()
+                    image = r.image,
+                    status = r.status.ToString()
                 })
             };
             return View(model);

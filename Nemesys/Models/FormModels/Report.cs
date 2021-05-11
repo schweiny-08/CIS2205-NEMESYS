@@ -25,7 +25,7 @@ namespace Nemesys.Models.FormModels
             status = Status.Open;
         }
 
-        public Report(int idNum, Reporter reporter, string location, int upvotes) : base(idNum, reporter)
+        public Report(int idNum, Reporter reporter, string location, int upvotes) : base(idNum)
         {
             this.location = location;
             this.upvotes = upvotes;

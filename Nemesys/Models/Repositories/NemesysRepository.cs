@@ -183,7 +183,7 @@ namespace Nemesys.Models.Repositories
 
         public IEnumerable<Investigation> GetAllInvestigations()
         {
-            return _nemesysContext.Investigations.Include(i => i.investigator).OrderBy(i => i.dateTime);
+            return _nemesysContext.Investigations.Include(i => i.investigator).Include(i => i.report).OrderBy(i => i.dateTime);
         }
 
         public IEnumerable<Investigation> GetInvestigationsByOwner(Investigator investigator)

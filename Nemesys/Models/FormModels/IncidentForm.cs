@@ -16,11 +16,11 @@ namespace Nemesys.Models.FormModels
             description = null;
         }
 
-        public IncidentForm(int idNum, Person user)
+        public IncidentForm(int idNum)//, Person user)
         {
             this.idNum = idNum;
             //this.ownerID = ownerID;
-            this.user = user;
+            //this.user = user;
             dateTime = default;
             description = "This is a description";
         }
@@ -29,6 +29,6 @@ namespace Nemesys.Models.FormModels
         public DateTime dateTime { get; set; }
         public string description { get; set; }
         //public int ownerID { get; set; }
-        Person user { get; set; }
+        //Person user { get; set; }
     }
 }

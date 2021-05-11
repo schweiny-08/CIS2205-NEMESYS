@@ -15,7 +15,7 @@ namespace Nemesys.Models.FormModels
             investigator = null;
         }
 
-        public Investigation(int idNum, Investigator investigator, Report report) : base(idNum, investigator)
+        public Investigation(int idNum, Investigator investigator, Report report) : base(idNum)
         {
             this.investigator = investigator;
             this.report = report;
@@ -26,16 +26,5 @@ namespace Nemesys.Models.FormModels
 
         public int reportId { get; set; }
         public Report report { get; set; }
-        //public int reportID { get; set; }
-
-       /* public void changeReportStatus()
-        {
-            //Report status is changed here
-        }*/
-
-        public void notifyReporter()
-        {
-            //Reporter is sent email
-        }
     }
 }
