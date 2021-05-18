@@ -26,8 +26,13 @@ namespace Nemesys.ViewModels.Reports
         public string description { get; set; }
         //public int ownerId { get; set; }
         /*[Required(ErrorMessage = "location is required!")]*/
+        [Required(ErrorMessage = "location is required!")]
         [Display(Name = "Report Location")]
-        public string location { get; set; }
+        public string latitude{ get; set; }
+
+        //[Required(ErrorMessage = "location is required!")]
+        [Display(Name = "Report Location")]
+        public string longitude { get; set; }
         
         //public int upvotes { get; set; }
 

@@ -37,7 +37,8 @@ namespace Nemesys.Controllers
                     Title = r.title,
                     dateTime = r.dateTime,
                     description = r.description,
-                    location = r.location,
+                    latitude = r.latitude,
+                    longitude = r.longitude,
                     upvotes = r.upvotes,
                     image = r.image,
                     status = r.status.ToString()
@@ -61,7 +62,8 @@ namespace Nemesys.Controllers
                         Title = report.title,
                         dateTime = report.dateTime,
                         description = report.description,
-                        location = report.location,
+                        latitude = report.latitude,
+                        longitude = report.longitude,
                         upvotes = report.upvotes,
                         image = report.image,
                         status = report.status.ToString(),
@@ -81,7 +83,8 @@ namespace Nemesys.Controllers
                         Title = report.title,
                         dateTime = report.dateTime,
                         description = report.description,
-                        location = report.location,
+                        latitude = report.latitude,
+                        longitude = report.longitude,
                         upvotes = report.upvotes,
                         image = report.image,
                         status = report.status.ToString(),
@@ -142,7 +145,8 @@ namespace Nemesys.Controllers
                     imageUrl = modelToUpdate.image;
 
                 modelToUpdate.title = updatedReport.Title;
-                modelToUpdate.location = modelToUpdate.location;
+                modelToUpdate.latitude = modelToUpdate.latitude;
+                modelToUpdate.longitude = modelToUpdate.longitude;
                 modelToUpdate.description = updatedReport.description;
                 modelToUpdate.image = imageUrl;
 
@@ -180,7 +184,8 @@ namespace Nemesys.Controllers
                     title = newReport.Title,
                     dateTime = newReport.dateTime,
                     description = newReport.description,
-                    location = newReport.location,
+                    latitude = newReport.latitude,
+                    longitude = newReport.longitude,
                     image = "/images/reportimages/" + fileName,
                     upvotes = 0,
                     status = Report.Status.Open,

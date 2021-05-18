@@ -149,7 +149,8 @@ namespace Nemesys.Models.Repositories
         {
             var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == report.idNum);
             if(existingReport != null){
-                existingReport.location = report.location;
+                existingReport.latitude = report.latitude;
+                existingReport.longitude = report.longitude;
                 existingReport.description = report.description;
                 existingReport.image = report.image;
 

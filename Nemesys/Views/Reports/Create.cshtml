@@ -27,9 +27,14 @@
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="location" class="control-label"></label>
-                <input asp-for="location" class="form-control" />
-                <span asp-validation-for="location" class="text-danger"></span>
+               @* <label asp-for="location" class="control-label"></label>*@
+                <input asp-for="latitude" class="form-control" id="hazardLat" type="hidden"/>
+                <span asp-validation-for="latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+               @* <label asp-for="location" class="control-label"></label>*@
+                <input asp-for="longitude" class="form-control" id="hazardLng" type="hidden"/>
+                <span asp-validation-for="longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="image" class="control-label"></label>
@@ -40,6 +45,7 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+        <div id="map"></div>
     </div>
 </div>
 
@@ -50,3 +56,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4wQLWgazxqr_bvLnmId21XXZR7ZNu1ts&callback=initMap&libraries=&v=weekly" async></script>
+<script type="text/javascript" src="~/js/map.js"></script>
