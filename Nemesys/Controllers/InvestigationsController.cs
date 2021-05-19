@@ -32,11 +32,11 @@ namespace Nemesys.Controllers
                 Investigations = _nemesysRepository
                 .GetAllInvestigations()
                 .OrderByDescending(i => i.dateTime)
-                .Select(i => new InvestigationViewModel(){ 
+                .Select(i => new InvestigationViewModel() {
                     Id = i.idNum,
                     dateTime = i.dateTime,
                     description = i.description,
-                    investigator = new InvestigatorViewModel() { 
+                    investigator = new InvestigatorViewModel() {
                         idNum = i.investigator.idNum,
                         email = i.investigator.email,
                         fName = i.investigator.fName,
@@ -50,7 +50,8 @@ namespace Nemesys.Controllers
                         Title = i.report.title,
                         dateTime = i.report.dateTime,
                         description = i.report.description,
-                        location = i.report.description,
+                        latitude = i.report.latitude,
+                        longitude = i.report.longitude,
                         upvotes = i.report.upvotes,
                         image = i.report.image,
                         status = i.report.status.ToString()
@@ -89,7 +90,8 @@ namespace Nemesys.Controllers
                         Title = investigation.report.title,
                         dateTime = investigation.report.dateTime,
                         description = investigation.report.description,
-                        location = investigation.report.location,
+                        latitude = investigation.report.latitude,
+                        longitude = investigation.report.longitude,
                         upvotes = investigation.report.upvotes,
                         image = investigation.report.image,
                         status = investigation.report.status.ToString()

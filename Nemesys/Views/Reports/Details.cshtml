@@ -7,20 +7,26 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="card jumbotron-fluid">
-     <div class="card-body">
-         <h2 class="card-title">@Model.Title</h2>
-         <p class="card-text">@Model.description</p>
-         <p class="small">Upvotes: @Model.upvotes</p>
-         <p class="small">@Model.location</p>
-         <p class="small text-warning">Status: @Model.status</p>
-         @if (Model.investigation != null)
-         { 
-           <a asp-controller="Investigations" asp-action="Details" asp-route-id="@Model.investigation.Id">View Investigation</a>
-         }
-         @*<p class="small"></p>*@
-     </div>
-    <img class="card-img-bottom" src="@Model.image" alt="Image for @Model.Title" />
+<div class="card text-center">
+    <div class="card-body" >
+        <h2 class="card-title">@Model.Title</h2>
+        <p class="card-text">@Model.description</p>
+        <p class="small">Upvotes: @Model.upvotes</p>
+        @*<p class="small">@Model.location</p>*@
+        <p class="small text-warning">Status: @Model.status</p>
+        @if (Model.investigation != null)
+        {
+            <a asp-controller="Investigations" asp-action="Details" asp-route-id="@Model.investigation.Id">View Investigation</a>
+        }
+        @*<p class="small"></p>*@
+    </div>
+    <img class="card-img-bottom" src="@Model.image" alt="Image for @Model.Title" style="
+        width: 33%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+" />
+    <div id="map"></div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
@@ -29,3 +35,13 @@
     <br />
     <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger">Delete Report</a>
 </div>
+
+<script type="text/javascript">
+    var lat = @Model.latitude;
+    var lng = @Model.longitude;
+</script>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_GoogleMapScriptsPartial");}
+}
+<script type="text/javascript" src="~/js/mapViewReport.js"></script>
