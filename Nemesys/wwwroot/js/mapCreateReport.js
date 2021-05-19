@@ -28,6 +28,8 @@ function addMarker(map, mapsMouseEvent) {
         marker.setPosition(mapsMouseEvent.latLng);
     }
 
-    document.getElementById("hazardLat").value = marker.position.lat;
-    document.getElementById("hazardLng").value = marker.position.lng;
+    document.getElementById("hazardLat").value = marker.getPosition().lat();
+    document.getElementById("hazardLng").value = marker.getPosition().lng();
+
+    //console.log(typeof marker.getPosition().lat());
 }

@@ -53,7 +53,8 @@ namespace Nemesys.Controllers
                 return NotFound();
             else
             {
-                ReportViewModel model;
+                //ReportViewModel model;
+                var model = new ReportViewModel();
                 if (report.investigation != null)
                 {
                     model = new ReportViewModel()
@@ -139,7 +140,7 @@ namespace Nemesys.Controllers
                     {
                         updatedReport.image.CopyTo(bits);
                     }
-                    imageUrl = "/iamges/reportimages/" + fileName;
+                    imageUrl = "/images/reportimages/" + fileName;
                 }
                 else
                     imageUrl = modelToUpdate.image;
@@ -163,7 +164,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("Title, dateTime, description, location, image")] CreateEditReportViewModel newReport) {
+        public IActionResult Create([Bind("Title, dateTime, description, latitude, longitude, image")] CreateEditReportViewModel newReport) {
             if (ModelState.IsValid)
             {
                 string fileName = "";
