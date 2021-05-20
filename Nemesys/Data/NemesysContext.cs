@@ -4,10 +4,11 @@ using Nemesys.Models.UserModels;
 using Microsoft.EntityFrameworkCore;
 using Nemesys.ViewModels;
 using Nemesys.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Nemesys.DAL
 {
-    public class NemesysContext : DbContext
+    public class NemesysContext : IdentityDbContext
     {
         public NemesysContext(DbContextOptions<NemesysContext> options) : base(options) // Setting the connection string
         {

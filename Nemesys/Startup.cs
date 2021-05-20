@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Nemesys.DAL;
 using Nemesys.Models.Interfaces;
 using Nemesys.Models.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace Nemesys
 {
@@ -38,16 +39,40 @@ namespace Nemesys
 
             services.AddDistributedMemoryCache();
 
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.Cookie.HttpOnly = true; // HttpOnly disallows client side from accessing cookies
-                options.Cookie.IsEssential = true; // IsEssential allows consent policy checks to be bypassed
-            });
-
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddRazorPages();
+
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                // User needs authorized account to sign in
+                options.SignIn.RequireConfirmedAccount = true;
+
+                // Password Requirements
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings - when there are a number of failed attempts in login
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings - constrains on username/email
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            }).AddEntityFrameworkStores<NemesysContext>();
+
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+                options.SlidingExpiration = true;
+            });
+
+            services.AddTransient<INemesysRepository, NemesysRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +94,7 @@ namespace Nemesys
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSession();
@@ -84,6 +110,8 @@ namespace Nemesys
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
