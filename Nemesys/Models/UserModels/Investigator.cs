@@ -23,9 +23,9 @@ namespace Nemesys.Models.UserModels
 
         public virtual ICollection<Investigation> investigations { get; set; }
 
-        public void addInvestigation(Investigation inv)
+       /* public void addInvestigation(Investigation inv)
         {
             investigations.Add(inv);
-        }
+        }*/
     }
 }
