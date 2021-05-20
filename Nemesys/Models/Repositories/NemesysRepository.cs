@@ -241,5 +241,29 @@ namespace Nemesys.Models.Repositories
             _nemesysContext.SaveChanges();
         }
 
+        // Hazard Types
+
+        public IEnumerable<HazardType> GetAllHazardTypes()
+        {
+            return _nemesysContext.HazardTypes.OrderBy(h => h.Id);
+        }
+
+        public HazardType GetHazardTypeById(int idNum)
+        {
+            return _nemesysContext.HazardTypes.FirstOrDefault(h => h.Id == idNum);
+        }
+
+        public void AddNewHazardType(HazardType hazardType)
+        {
+            _nemesysContext.HazardTypes.Add(hazardType);
+
+            _nemesysContext.SaveChanges();
+        }
+
+        public void DeleteHazardType(HazardType hazardType)
+        {
+            _nemesysContext.HazardTypes.Remove(hazardType);
+            _nemesysContext.SaveChanges();
+        }
     }
 }

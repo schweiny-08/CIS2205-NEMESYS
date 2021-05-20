@@ -3,6 +3,7 @@ using Nemesys.Models.UserModels;
 
 using Microsoft.EntityFrameworkCore;
 using Nemesys.ViewModels;
+using Nemesys.Models;
 
 namespace Nemesys.DAL
 {
@@ -17,6 +18,7 @@ namespace Nemesys.DAL
         public DbSet<Investigator> Investigators { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Investigation> Investigations { get; set; }
+        public DbSet<HazardType> HazardTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +26,7 @@ namespace Nemesys.DAL
             modelBuilder.Entity<Investigator>().ToTable("Investigator");
             modelBuilder.Entity<Report>().ToTable("Report");
             modelBuilder.Entity<Investigation>().ToTable("Investigation");
+            modelBuilder.Entity<HazardType>().ToTable("HazardType");
         }
 
       /*  public DbSet<Nemesys.ViewModels.Reports.ReportViewModel> ReportViewModel { get; set; }

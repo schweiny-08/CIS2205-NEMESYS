@@ -37,6 +37,15 @@
                 <span asp-validation-for="longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="hazardTypeId" class="col-md-2"></label>
+                <div class="col-md-5">
+                    <select asp-for="hazardTypeId" asp-items="@(new SelectList(Model.HazardTypeList, "Id", "hazardType"))">
+                        <option value="">Select a hazard type</option>
+                    </select>
+                    <span asp-validation-for="hazardTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="image" class="control-label"></label>
                 <input type="file" asp-for="image" class="form-control" />
                 <span asp-validation-for="image" class="text-danger"></span>

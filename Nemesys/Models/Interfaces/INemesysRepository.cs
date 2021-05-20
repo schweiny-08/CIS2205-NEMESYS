@@ -49,5 +49,11 @@ namespace Nemesys.Models.Interfaces
         void AddNewInvestigation(Investigation investigation);
         void UpdateInvestigation(Investigation investigation);
         void DeleteInvestigation(Investigation investigation);
+
+        // Hazard Types
+        IEnumerable<HazardType> GetAllHazardTypes();
+        HazardType GetHazardTypeById(int idNum);
+        void AddNewHazardType(HazardType hazardType);
+        void DeleteHazardType(HazardType hazardType);
     }
 }

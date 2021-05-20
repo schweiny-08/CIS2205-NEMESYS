@@ -44,5 +44,7 @@ namespace Nemesys.Models.FormModels
         public Reporter reporter { get; set; }
         public int investidationId { get; set; }
         public Investigation investigation { get; set; }
+        public int hazardId { get; set; }
+        public HazardType hazardType { get; set; }
     }
 }
