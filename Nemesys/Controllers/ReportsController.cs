@@ -10,6 +10,7 @@ using Nemesys.DAL;
 using Nemesys.Models.FormModels;
 using Nemesys.Models.Interfaces;
 using Nemesys.ViewModels;
+using Nemesys.ViewModels.HazardTypes;
 using Nemesys.ViewModels.Investigations;
 using Nemesys.ViewModels.Reports;
 
@@ -39,6 +40,11 @@ namespace Nemesys.Controllers
                     description = r.description,
                     latitude = r.latitude,
                     longitude = r.longitude,
+                    hazardType = new HazardTypeViewModel () {
+                        Id = r.hazardId,
+                        hazardTypeName = r.hazardType.hazardTypeName
+                    },
+                    //Owner goes here
                     upvotes = r.upvotes,
                     image = r.image,
                     status = r.status.ToString()
@@ -73,6 +79,11 @@ namespace Nemesys.Controllers
                             Id = report.investidationId,
                             dateTime = report.investigation.dateTime,
                             description = report.investigation.description,
+                        },
+                        hazardType = new HazardTypeViewModel()
+                        {
+                            Id = report.hazardId,
+                            hazardTypeName = report.hazardType.hazardTypeName
                         }
                         //reporter = new ReportViewModel(){}
                     };
@@ -89,6 +100,11 @@ namespace Nemesys.Controllers
                         upvotes = report.upvotes,
                         image = report.image,
                         status = report.status.ToString(),
+                        hazardType = new HazardTypeViewModel()
+                        {
+                            Id = report.hazardId,
+                            hazardTypeName = report.hazardType.hazardTypeName
+                        }
                         /*investigation = new InvestigationViewModel()
                         {
                             Id = report.investidationId,
@@ -112,8 +128,16 @@ namespace Nemesys.Controllers
                     Id = existingReport.idNum,
                     Title = existingReport.title,
                     description = existingReport.description,
-                    imageUrl = existingReport.image
+                    imageUrl = existingReport.image,
+                    hazardTypeId = existingReport.hazardId
                 };
+
+                var hazazrdTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel() { 
+                    Id = h.Id,
+                    hazardTypeName = h.hazardTypeName
+                }).ToList();
+
+                model.HazardTypeList = hazazrdTypeList;
 
                 return View(model);
             }
@@ -146,20 +170,41 @@ namespace Nemesys.Controllers
                     imageUrl = modelToUpdate.image;
 
                 modelToUpdate.title = updatedReport.Title;
-                modelToUpdate.latitude = modelToUpdate.latitude;
-                modelToUpdate.longitude = modelToUpdate.longitude;
+                modelToUpdate.latitude = updatedReport.latitude;
+                modelToUpdate.longitude = updatedReport.longitude;
                 modelToUpdate.description = updatedReport.description;
                 modelToUpdate.image = imageUrl;
+                modelToUpdate.hazardId = updatedReport.hazardTypeId;
 
                 _nemesysRepository.UpdateReport(modelToUpdate);
                 return RedirectToAction("Index");
             }
             else
+            {
+                var hazardTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel()
+                {
+                    Id = h.Id,
+                    hazardTypeName = h.hazardTypeName
+                }).ToList();
+
+                updatedReport.HazardTypeList = hazardTypeList;
+
                 return View(updatedReport);
+            }
         }
 
         [HttpGet]
         public IActionResult Create() {
+
+            var hazardTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel() { 
+                Id = h.Id,
+                hazardTypeName = h.hazardTypeName
+            }).ToList();
+
+            var model = new CreateEditReportViewModel() {
+                HazardTypeList = hazardTypeList
+            };
+
             return View();
         }
 
@@ -190,6 +235,7 @@ namespace Nemesys.Controllers
                     image = "/images/reportimages/" + fileName,
                     upvotes = 0,
                     status = Report.Status.Open,
+                    hazardId = newReport.hazardTypeId,
                     reporteridNum = 1,
                     investidationId = 1
                 };
@@ -198,7 +244,16 @@ namespace Nemesys.Controllers
                 return RedirectToAction("Index");
             }
             else
+            {
+                var hazardTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel (){
+                    Id = h.Id,
+                    hazardTypeName = h.hazardTypeName
+                }).ToList();
+
+                newReport.HazardTypeList = hazardTypeList;
+
                 return View(newReport);
+            }
         }
 
         [HttpDelete]
@@ -208,6 +263,7 @@ namespace Nemesys.Controllers
                 return NotFound();
             if (reportToDelete.investigation != null)
                 _nemesysRepository.DeleteInvestigation(reportToDelete.investigation);
+
             _nemesysRepository.DeleteReport(reportToDelete);
             return RedirectToAction("Index");
         }

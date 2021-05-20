@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Nemesys.Models.FormModels;
+using Nemesys.ViewModels.HazardTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,22 +25,21 @@ namespace Nemesys.ViewModels.Reports
         [StringLength(1500, ErrorMessage = "Description is too long!")]
         [Display(Name = "Report Description")]
         public string description { get; set; }
-        //public int ownerId { get; set; }
-        /*[Required(ErrorMessage = "location is required!")]*/
-        //[Required(ErrorMessage = "location is required!")]
+     
         [Display(Name = "Report Location")]
         public string latitude{ get; set; }
-
-        //[Required(ErrorMessage = "location is required!")]
         [Display(Name = "Report Location")]
         public string longitude { get; set; }
-        
-        //public int upvotes { get; set; }
 
         [Display(Name = "Image of hazard")]
         [NotMapped]
         public IFormFile image { get; set; }
         public string imageUrl { get; set; }
-        //public Report.Status status { get; set; }
+        
+        [Required(ErrorMessage ="Hazard type is required!")]
+
+        public int hazardTypeId { get; set; }
+
+        public List<HazardTypeViewModel> HazardTypeList { get; set; }
     }
 }

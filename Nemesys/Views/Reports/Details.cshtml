@@ -13,6 +13,7 @@
         <p class="card-text">@Model.description</p>
         <p class="small">Upvotes: @Model.upvotes</p>
         @*<p class="small">@Model.location</p>*@
+        <p class="small">Hazard Type: @Model.hazardType.hazardTypeName</p>
         <p class="small text-warning">Status: @Model.status</p>
         @if (Model.investigation != null)
         {
