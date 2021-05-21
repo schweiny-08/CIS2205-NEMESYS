@@ -33,15 +33,9 @@ namespace Nemesys
             services.AddDbContext<NemesysContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NemesysDBConnection")));
 
-            services.AddTransient<INemesysRepository, NemesysRepository>();
-
             //services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDistributedMemoryCache();
-
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
-            services.AddRazorPages();
+            //services.AddDistributedMemoryCache();
+            //services.AddRazorPages();
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
@@ -73,6 +67,8 @@ namespace Nemesys
             });
 
             services.AddTransient<INemesysRepository, NemesysRepository>();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,7 +76,7 @@ namespace Nemesys
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();                
             }
             else
             {
@@ -97,16 +93,16 @@ namespace Nemesys
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSession();
+            //app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                /*endpoints.MapControllerRoute(
                     name: "root",
                     pattern: "{action}",
                     defaults: new { controller = "Home", action="Index"}
                     );
-
+*/
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

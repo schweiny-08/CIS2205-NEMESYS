@@ -18,27 +18,20 @@ namespace Nemesys
         {
             var host = CreateHostBuilder(args).Build();
 
-            //CreateDbIfNotExists(host);
-
-            host.Run();
-        }
-
-        private static void CreateDbIfNotExists(IHost host)
-        {
-            using (var scope = host.Services.CreateScope())
-            {
+            using (var scope = host.Services.CreateScope()) {
                 var services = scope.ServiceProvider;
                 try
                 {
                     var context = services.GetRequiredService<NemesysContext>();
                     DbInitializer.Initialize(context);
                 }
-                catch (Exception e)
-                {
+                catch (Exception e){
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(e, "An error occured creating the DB");
+                    logger.LogError(e, "An error occured while creating DB");
                 }
             }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

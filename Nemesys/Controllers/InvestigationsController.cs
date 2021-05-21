@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,12 @@ namespace Nemesys.Controllers
     public class InvestigationsController : Controller
     {
         private readonly INemesysRepository _nemesysRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public InvestigationsController(INemesysRepository nemesysRepository)
+        public InvestigationsController(INemesysRepository nemesysRepository, UserManager<IdentityUser> userManager)
         {
             _nemesysRepository = nemesysRepository;
+            _userManager = userManager;
         }
 
         // GET: Investigations
@@ -37,12 +40,12 @@ namespace Nemesys.Controllers
                     dateTime = i.dateTime,
                     description = i.description,
                     investigator = new InvestigatorViewModel() {
-                        idNum = i.investigator.idNum,
-                        email = i.investigator.email,
-                        fName = i.investigator.fName,
-                        lName = i.investigator.lName,
-                        imageUrl = i.investigator.image,
-                        deptNum = i.investigator.deptNum
+                        idNum = i.UserId,
+                        email = _userManager.FindByIdAsync(i.UserId).Result.Email,
+                        fName = (_userManager.FindByIdAsync(i.UserId).Result != null) ? _userManager.FindByIdAsync(i.UserId).Result.UserName : "Anonymous"
+                        //lName = i.investigator.lName,
+                        //imageUrl = i.investigator.image,
+                        //deptNum = i.investigator.deptNum
                     },
                     report = new ReportViewModel()
                     {
@@ -61,7 +64,6 @@ namespace Nemesys.Controllers
             return View(model);
         }
 
-        // GET: Investigations/Details/5
         [HttpGet]
         public IActionResult Details(int id)
         {
@@ -77,12 +79,12 @@ namespace Nemesys.Controllers
                     description = investigation.description,
                     investigator = new InvestigatorViewModel()
                     {
-                        idNum = investigation.investigator.idNum,
-                        email = investigation.investigator.email,
-                        fName = investigation.investigator.fName,
-                        lName = investigation.investigator.lName,
-                        imageUrl = investigation.investigator.image,
-                        deptNum = investigation.investigator.deptNum
+                        idNum = investigation.UserId,
+                        email = _userManager.FindByIdAsync(investigation.UserId).Result.Email,
+                        fName = (_userManager.FindByIdAsync(investigation.UserId).Result != null) ? _userManager.FindByIdAsync(investigation.UserId).Result.UserName : "Anonymous"  //investigation.investigator.UserName//,
+                        //lName = investigation.investigator.lName,
+                        //imageUrl = investigation.investigator.image,
+                        //deptNum = investigation.investigator.deptNum
                     },
                     report = new ReportViewModel()
                     {
@@ -101,16 +103,12 @@ namespace Nemesys.Controllers
             }
         }
 
-        // GET: Investigations/Create
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Investigations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id, dateTime, description, reportStatus, reportId")] CreateEditInvestigationViewModel newInvestigation)
@@ -121,20 +119,17 @@ namespace Nemesys.Controllers
                 {
                     dateTime = newInvestigation.dateTime,
                     description = newInvestigation.description,
-                    investigatorId = 2, //hard coded
-                    reportId = 3 //hard coded
+                    UserId = _userManager.GetUserId(User), //hard coded
+                    reportId = 1 //hard coded
                 };
 
                 int status = 0;
                 if (String.Equals(newInvestigation.reportStatus, "Being Investigated"))
                     status = 1;
-                //investigation.report.status = Report.Status.Investigating;
                 else if (String.Equals(newInvestigation.reportStatus, "No Action Needed"))
                     status = 2;
-                //investigation.report.status = Report.Status.NoAction;
                 else if (String.Equals(newInvestigation.reportStatus, "Closed"))
                     status = 3;
-                    //investigation.report.status = Report.Status.Closed;
                 //CHECK IF REPORT HAS INVESTIGATION
 
                 _nemesysRepository.AddNewInvestigation(investigation);
@@ -145,7 +140,6 @@ namespace Nemesys.Controllers
                 return View(newInvestigation);
         }
 
-        // GET: Investigations/Edit/5
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -165,9 +159,6 @@ namespace Nemesys.Controllers
                 return RedirectToAction("Index");
         }
 
-        // POST: Investigations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id, dateTime, description, reportStatus")] CreateEditInvestigationViewModel updatedInvestigation)
@@ -196,26 +187,6 @@ namespace Nemesys.Controllers
             
         }
 
-        // GET: Investigations/Delete/5
-        /*public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var investigation = await _nemesysRepository.Investigations
-                .Include(i => i.investigator)
-                .Include(i => i.report)
-                .FirstOrDefaultAsync(m => m.idNum == id);
-            if (investigation == null)
-            {
-                return NotFound();
-            }
-
-            return View(investigation);
-        }*/
-
         // POST: Investigations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -227,10 +198,5 @@ namespace Nemesys.Controllers
             _nemesysRepository.DeleteInvestigation(investigationToDelete);
             return RedirectToAction("Index");
         }
-
-        /*private bool InvestigationExists(int id)
-        {
-            return _nemesysRepository.Investigations.Any(e => e.idNum == id);
-        }*/
     }
 }

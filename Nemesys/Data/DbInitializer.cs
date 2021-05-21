@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Nemesys.Models;
 using Nemesys.Models.FormModels;
-using Nemesys.Models.UserModels;
+//using Nemesys.Models.UserModels;
 
 namespace Nemesys.DAL
 {
@@ -14,7 +14,7 @@ namespace Nemesys.DAL
         {
             context.Database.EnsureCreated();
 
-            if (context.Reporters.Any())
+            if (context.HazardTypes.Any())
                 return;
 
 

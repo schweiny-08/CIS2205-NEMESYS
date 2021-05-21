@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Microsoft.AspNetCore.Identity;
 using Nemesys.Models.FormModels;
-using Nemesys.Models.UserModels;
+//using Nemesys.Models.UserModels;
 
 namespace Nemesys.Models.FormModels
 {
@@ -12,17 +12,17 @@ namespace Nemesys.Models.FormModels
     {
         public Investigation() : base()
         {
-            investigator = null;
+            //investigator = null;
         }
 
-        public Investigation(int idNum, Investigator investigator, Report report) : base(idNum)
+       /* public Investigation(int idNum, Investigator investigator, Report report) : base(idNum)
         {
             this.investigator = investigator;
             this.report = report;
-        }
+        }*/
 
-        public int investigatorId { get; set; }
-        public Investigator investigator { get; set; }
+       /* public string investigatorId { get; set; }
+        public IdentityUser investigator { get; set; }*/
 
         public int reportId { get; set; }
         public Report report { get; set; }

@@ -1,5 +1,6 @@
-﻿using Nemesys.Models.FormModels;
-using Nemesys.Models.UserModels;
+﻿using Microsoft.AspNetCore.Identity;
+using Nemesys.Models.FormModels;
+//using Nemesys.Models.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Nemesys.Models.Interfaces
 {
     public interface INemesysRepository
     {
-        // Reporters
+       /* // Reporters
 
         IEnumerable<Reporter> GetAllReporters();
         Reporter GetReporterById(int userId);
@@ -24,12 +25,12 @@ namespace Nemesys.Models.Interfaces
         Investigator GetInvestigatorById(int userId);
         void AddNewInvestigator(Investigator investigator);
         void UpdateInvestigator(Investigator investigator);
-        void DeleteInvestigator(Investigator investigator);
+        void DeleteInvestigator(Investigator investigator);*/
 
         // Reports
 
         IEnumerable<Report> GetAllReports();
-        IEnumerable<Report> GetReportsByOwner(Reporter reporter);
+        IEnumerable<Report> GetReportsByOwner(IdentityUser reporter);
         Report GetReportById(int idNum);
         //Report GetReportByOwner(int idNm,int userId);
         void AddNewReport(Report report);
@@ -44,7 +45,7 @@ namespace Nemesys.Models.Interfaces
         // Investigations
 
         IEnumerable<Investigation> GetAllInvestigations();
-        IEnumerable<Investigation> GetInvestigationsByOwner(Investigator investigator);
+        IEnumerable<Investigation> GetInvestigationsByOwner(IdentityUser investigator);
         Investigation GetInvestigationById(int idNum);
         void AddNewInvestigation(Investigation investigation);
         void UpdateInvestigation(Investigation investigation);

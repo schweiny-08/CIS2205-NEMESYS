@@ -1,6 +1,7 @@
 ﻿using Nemesys.Models.FormModels;
 using Nemesys.ViewModels.HazardTypes;
 using Nemesys.ViewModels.Investigations;
+using Nemesys.ViewModels.Users;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +23,6 @@ namespace Nemesys.ViewModels.Reports
         /*public int investigationId { get; set; }*/
         public InvestigationViewModel investigation{ get; set; }
         public HazardTypeViewModel hazardType { get; set; }
-        //ReporterViewModel Reporter { get; set; }
+        public ReporterViewModel Reporter { get; set; }
     }
 }
