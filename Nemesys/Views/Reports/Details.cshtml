@@ -19,7 +19,7 @@
         {
             <a asp-controller="Investigations" asp-action="Details" asp-route-id="@Model.investigation.Id">View Investigation</a>
         }
-        @*<p class="small"></p>*@
+        <p class="small">Reporter: <a asp-area="Identity" asp-page="/Account/Manage/Index">@Model.Reporter.email</a></p>
     </div>
     <img class="card-img-bottom" src="@Model.image" alt="Image for @Model.Title" style="
         width: 33%;
