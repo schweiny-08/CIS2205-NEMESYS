@@ -20,12 +20,15 @@ namespace Nemesys
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IWebHostEnvironment _env;
 
         public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment env ,IConfiguration configuration)
+        {
+            _env = env;
+            Configuration = configuration;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

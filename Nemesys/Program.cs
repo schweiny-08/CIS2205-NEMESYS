@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.DependencyInjection;
 using Nemesys.DAL;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace Nemesys
 {
@@ -23,7 +25,10 @@ namespace Nemesys
                 try
                 {
                     var context = services.GetRequiredService<NemesysContext>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
                     DbInitializer.Initialize(context);
+                    DbInitializer.SeedRoles(roleManager);
                 }
                 catch (Exception e){
                     var logger = services.GetRequiredService<ILogger<Program>>();
@@ -36,6 +41,11 @@ namespace Nemesys
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging => 
+                {
+                    logging.ClearProviders();
+                    logging.AddEventLog();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

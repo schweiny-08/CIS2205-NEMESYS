@@ -148,15 +148,24 @@ namespace Nemesys.Models.Repositories
 
         public void UpdateReport(Report report)
         {
-            var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == report.idNum);
-            if(existingReport != null){
-                existingReport.latitude = report.latitude;
-                existingReport.longitude = report.longitude;
-                existingReport.description = report.description;
-                existingReport.image = report.image;
+            try
+            {
+                var existingReport = _nemesysContext.Reports.SingleOrDefault(r => r.idNum == report.idNum);
+                if (existingReport != null)
+                {
+                    existingReport.latitude = report.latitude;
+                    existingReport.longitude = report.longitude;
+                    existingReport.description = report.description;
+                    existingReport.image = report.image;
+                    existingReport.hazardTypeId = report.hazardTypeId;
 
-                _nemesysContext.Entry(existingReport).State = EntityState.Modified;
-                _nemesysContext.SaveChanges();
+                    _nemesysContext.Entry(existingReport).State = EntityState.Modified;
+                    _nemesysContext.SaveChanges();
+                }
+            }
+            catch(DbUpdateException dbe)
+            {
+
             }
         }
 

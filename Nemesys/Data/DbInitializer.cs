@@ -4,12 +4,21 @@ using System.Linq;
 using System.Text;
 using Nemesys.Models;
 using Nemesys.Models.FormModels;
+using Microsoft.AspNetCore.Identity;
 //using Nemesys.Models.UserModels;
 
 namespace Nemesys.DAL
 {
     public class DbInitializer
     {
+        public static void SeedRoles(RoleManager<IdentityRole> roleManager) {
+            if (!roleManager.Roles.Any()) {
+                roleManager.CreateAsync(new IdentityRole("Reporter")).Wait();
+                roleManager.CreateAsync(new IdentityRole("Investigator")).Wait();
+                roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
+            }
+        }
+
         public static void Initialize(NemesysContext context)
         {
             context.Database.EnsureCreated();
