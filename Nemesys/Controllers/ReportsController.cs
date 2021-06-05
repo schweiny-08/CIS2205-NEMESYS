@@ -132,21 +132,25 @@ namespace Nemesys.Controllers
             var existingReport = _nemesysRepository.GetReportById(id);
             if (existingReport != null)
             {
+                var hazazrdTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel()
+                {
+                    Id = h.Id,
+                    hazardTypeName = h.hazardTypeName
+                }).ToList();
+
                 CreateEditReportViewModel model = new CreateEditReportViewModel()
                 {
                     Id = existingReport.idNum,
                     Title = existingReport.title,
                     description = existingReport.description,
                     imageUrl = existingReport.image,
-                    hazardTypeId = existingReport.hazardTypeId
+                    hazardTypeId = existingReport.hazardTypeId,
+                    HazardTypeList = hazazrdTypeList
                 };
 
-                var hazazrdTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel() { 
-                    Id = h.Id,
-                    hazardTypeName = h.hazardTypeName
-                }).ToList();
+                
 
-                model.HazardTypeList = hazazrdTypeList;
+               //model.HazardTypeList = hazazrdTypeList;
 
                 return View(model);
             }
