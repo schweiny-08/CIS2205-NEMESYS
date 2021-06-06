@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Nemesys.DAL;
 using Nemesys.Models;
-//using Nemesys.Models.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,26 +21,26 @@ namespace Nemesys.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e) {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e) {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
         }
-/*
-        public IActionResult Login() {
-            return View();
-        }
-
-        public IActionResult Register() {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }*/
     }
 }
