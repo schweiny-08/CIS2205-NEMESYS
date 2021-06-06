@@ -121,60 +121,6 @@ namespace Nemesys.Controllers
             }
         }
 
-        // Since hazard types dont have a lot of data associated with it, no need to edit
-
-/*
-      [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var existingHazardType = _nemesysRepository.GetHazardTypeById(id);
-
-            if (existingHazardType != null)
-            {
-                CreateEditHazardTypeViewModel model = new CreateEditHazardTypeViewModel() {
-                    hazardTypeName = existingHazardType.hazardTypeName
-                };
-
-                return View(model);
-            } else
-                return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("hazardTypeName")] HazardType updatedHazardType)
-        {
-            var modelToUpdate = _nemesysRepository.GetHazardTypeById(id);
-
-            if (modelToUpdate == null)
-                return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                modelToUpdate.hazardTypeName = updatedHazardType.hazardTypeName;
-
-                _nemesysRepository.updat
-            }
-        }
-*/
-       /* // GET: HazardTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var hazardType = await _context.HazardTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (hazardType == null)
-            {
-                return NotFound();
-            }
-
-            return View(hazardType);
-        }*/
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
