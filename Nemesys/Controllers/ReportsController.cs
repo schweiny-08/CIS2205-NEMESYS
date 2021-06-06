@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -167,6 +168,8 @@ namespace Nemesys.Controllers
                             description = existingReport.description,
                             imageUrl = existingReport.image,
                             hazardTypeId = existingReport.hazardTypeId,
+                            latitude = existingReport.latitude,
+                            longitude = existingReport.longitude
                         };
 
                         var hazazrdTypeList = _nemesysRepository.GetAllHazardTypes().Select(h => new HazardTypeViewModel()
@@ -363,6 +366,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public IActionResult Delete(int id) {
             try
             {
