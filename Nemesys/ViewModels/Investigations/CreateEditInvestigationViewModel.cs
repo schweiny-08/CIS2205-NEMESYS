@@ -24,6 +24,6 @@ namespace Nemesys.ViewModels.Investigations
         [Display(Name = "Change report status to:")]
         public string reportStatus { get; set; }
 
-        //public int repoortId { get; set; }
+        public int reportId { get; set; }
     }
 }
