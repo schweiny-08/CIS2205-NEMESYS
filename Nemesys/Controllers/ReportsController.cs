@@ -11,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Nemesys.DAL;
+using Nemesys.Models;
 using Nemesys.Models.FormModels;
 using Nemesys.Models.Interfaces;
 using Nemesys.ViewModels;
@@ -24,9 +25,9 @@ namespace Nemesys.Controllers
     public class ReportsController : Controller
     {
         private readonly INemesysRepository _nemesysRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ReportsController> _logger;
-        public ReportsController(INemesysRepository nemesysRepository, UserManager<IdentityUser> userManager, ILogger<ReportsController> logger)
+        public ReportsController(INemesysRepository nemesysRepository, UserManager<ApplicationUser> userManager, ILogger<ReportsController> logger)
         {
             _nemesysRepository = nemesysRepository;
             _userManager = userManager;

@@ -20,7 +20,7 @@ namespace Nemesys.Models.FormModels
         public DateTime dateTime { get; set; }
         public string description { get; set; }
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public ApplicationUser User { get; set; }
 
         //public int ownerID { get; set; }
         //Person user { get; set; }
