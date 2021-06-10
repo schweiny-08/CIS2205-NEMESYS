@@ -15,6 +15,7 @@ using Nemesys.DAL;
 using Nemesys.Models.Interfaces;
 using Nemesys.Models.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Nemesys.Models;
 
 namespace Nemesys
 {
@@ -40,7 +41,7 @@ namespace Nemesys
             //services.AddDistributedMemoryCache();
             //services.AddRazorPages();
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 // User needs authorized account to sign in
                 options.SignIn.RequireConfirmedAccount = true;

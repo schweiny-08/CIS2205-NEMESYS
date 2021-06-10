@@ -30,7 +30,7 @@ namespace Nemesys.Models.Interfaces
         // Reports
 
         IEnumerable<Report> GetAllReports();
-        IEnumerable<Report> GetReportsByOwner(IdentityUser reporter);
+        IEnumerable<Report> GetReportsByOwner(ApplicationUser reporter);
         Report GetReportById(int idNum);
         //Report GetReportByOwner(int idNm,int userId);
         void AddNewReport(Report report);
@@ -45,7 +45,7 @@ namespace Nemesys.Models.Interfaces
         // Investigations
 
         IEnumerable<Investigation> GetAllInvestigations();
-        IEnumerable<Investigation> GetInvestigationsByOwner(IdentityUser investigator);
+        IEnumerable<Investigation> GetInvestigationsByOwner(ApplicationUser investigator);
         Investigation GetInvestigationById(int idNum);
         void AddNewInvestigation(Investigation investigation);
         void UpdateInvestigation(Investigation investigation);

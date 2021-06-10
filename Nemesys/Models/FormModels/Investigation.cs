@@ -12,17 +12,7 @@ namespace Nemesys.Models.FormModels
     {
         public Investigation() : base()
         {
-            //investigator = null;
         }
-
-       /* public Investigation(int idNum, Investigator investigator, Report report) : base(idNum)
-        {
-            this.investigator = investigator;
-            this.report = report;
-        }*/
-
-       /* public string investigatorId { get; set; }
-        public IdentityUser investigator { get; set; }*/
 
         public int reportId { get; set; }
         public Report report { get; set; }

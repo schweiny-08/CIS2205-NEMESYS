@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Nemesys.DAL;
+using Nemesys.Models;
 using Nemesys.Models.FormModels;
 using Nemesys.Models.Interfaces;
 using Nemesys.Models.Repositories;
@@ -21,10 +22,10 @@ namespace Nemesys.Controllers
     public class InvestigationsController : Controller
     {
         private readonly INemesysRepository _nemesysRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<InvestigationsController> _logger;
 
-        public InvestigationsController(INemesysRepository nemesysRepository, UserManager<IdentityUser> userManager, ILogger<InvestigationsController> logger)
+        public InvestigationsController(INemesysRepository nemesysRepository, UserManager<ApplicationUser> userManager, ILogger<InvestigationsController> logger)
         {
             _nemesysRepository = nemesysRepository;
             _userManager = userManager;
