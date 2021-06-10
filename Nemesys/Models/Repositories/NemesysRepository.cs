@@ -46,7 +46,7 @@ namespace Nemesys.Models.Repositories
             }
         }
 
-        public IEnumerable<Report> GetReportsByOwner(IdentityUser reporter)
+        public IEnumerable<Report> GetReportsByOwner(ApplicationUser reporter)
         {
             try
             {
@@ -215,7 +215,7 @@ namespace Nemesys.Models.Repositories
             }
         }
 
-        public IEnumerable<Investigation> GetInvestigationsByOwner(IdentityUser investigator)
+        public IEnumerable<Investigation> GetInvestigationsByOwner(ApplicationUser investigator)
         {
             try
             {
