@@ -1,0 +1,22 @@
+﻿@model Nemesys.ViewModels.Admin.ListRolesViewModel
+
+@{
+    ViewData["Title"] = "All User Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h2>Showing @Model.TotalEntries user roles.</h2>
+
+<div class="row">
+    @foreach (var role in Model.UserRoles)
+    {
+        <div class="card" style="width: 18rem; padding: 20px; margin: 20px">
+            <div class="card-body">
+                <h3 class="card-title">@role.RoleName</h3>
+                @*<a asp-controller="Admin" asp-action="Delete" asp-route-id="@role.Id" class="btn btn-danger">Delete</a>*@
+            </div>
+        </div>
+    }
+</div>

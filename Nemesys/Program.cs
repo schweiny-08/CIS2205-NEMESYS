@@ -25,9 +25,10 @@ namespace Nemesys
                 try
                 {
                     var context = services.GetRequiredService<NemesysContext>();
-                    //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                    DbInitializer.Initialize(context);
+                    DbInitializer.SeedHazardTypes(context);
+                    DbInitializer.SeedUserRoles(roleManager);
                 }
                 catch (Exception e){
                     var logger = services.GetRequiredService<ILogger<Program>>();

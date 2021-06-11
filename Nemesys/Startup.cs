@@ -62,7 +62,9 @@ namespace Nemesys
                 // User settings - constrains on username/email
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
-            }).AddEntityFrameworkStores<NemesysContext>();
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<NemesysContext>();
 
             services.ConfigureApplicationCookie(options => {
                 options.Cookie.HttpOnly = true;

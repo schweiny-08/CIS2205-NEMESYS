@@ -10,23 +10,6 @@ namespace Nemesys.Models.Interfaces
 {
     public interface INemesysRepository
     {
-       /* // Reporters
-
-        IEnumerable<Reporter> GetAllReporters();
-        Reporter GetReporterById(int userId);
-        Reporter GetReporterByEmail(string email);
-        void AddNewReporter(Reporter reporter);
-        void UpdateReporter(Reporter reporter);
-        void DeleteReporter(Reporter reporter);
-
-        // Investigators
-
-        IEnumerable<Investigator> GetAllInvestigators();
-        Investigator GetInvestigatorById(int userId);
-        void AddNewInvestigator(Investigator investigator);
-        void UpdateInvestigator(Investigator investigator);
-        void DeleteInvestigator(Investigator investigator);*/
-
         // Reports
 
         IEnumerable<Report> GetAllReports();
@@ -56,5 +39,10 @@ namespace Nemesys.Models.Interfaces
         HazardType GetHazardTypeById(int idNum);
         void AddNewHazardType(HazardType hazardType);
         void DeleteHazardType(HazardType hazardType);
+
+        // Roles
+      /*  IEnumerable<IdentityRole> GetAllUserRoles();
+        IEnumerable<ApplicationUser> GetUsersByRoles();
+        void AddNewRole();*/
     }
 }

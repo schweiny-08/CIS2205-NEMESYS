@@ -340,5 +340,11 @@ namespace Nemesys.Models.Repositories
                 throw;
             }
         }
+
+       /* // Roles
+        public IEnumerable<IdentityRole> GetAllUserRoles()
+        {
+
+        }*/
     }
 }

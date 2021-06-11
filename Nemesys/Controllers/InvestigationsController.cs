@@ -32,7 +32,7 @@ namespace Nemesys.Controllers
             _logger = logger;
         }
 
-        // GET: Investigations
+        [HttpGet]
         public IActionResult Index()
         {
             try

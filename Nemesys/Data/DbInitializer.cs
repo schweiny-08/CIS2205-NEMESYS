@@ -11,7 +11,17 @@ namespace Nemesys.DAL
 {
     public class DbInitializer
     {
-        public static void Initialize(NemesysContext context)
+        public static void SeedUserRoles(RoleManager<IdentityRole> roleManager)
+        {
+            if (!roleManager.Roles.Any())
+            {
+                roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
+                roleManager.CreateAsync(new IdentityRole("Reporter")).Wait();
+                roleManager.CreateAsync(new IdentityRole("Investigator")).Wait();
+            }
+        }
+
+        public static void SeedHazardTypes(NemesysContext context)
         {
             context.Database.EnsureCreated();
 
