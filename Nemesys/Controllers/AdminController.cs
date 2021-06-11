@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Nemesys.ViewModels.Admin;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nemesys.Controllers
 {
@@ -20,6 +21,7 @@ namespace Nemesys.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public IActionResult AllRoles()
         {
@@ -43,6 +45,7 @@ namespace Nemesys.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CreateRole() 
         {
@@ -57,6 +60,7 @@ namespace Nemesys.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateRole([Bind("Id, RoleName")] CreateRoleViewModel newRole)
         {

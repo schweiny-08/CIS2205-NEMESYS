@@ -11,6 +11,7 @@ using Nemesys.DAL;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
+using Nemesys.Models;
 
 namespace Nemesys
 {
@@ -26,9 +27,12 @@ namespace Nemesys
                 {
                     var context = services.GetRequiredService<NemesysContext>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
                     DbInitializer.SeedHazardTypes(context);
                     DbInitializer.SeedUserRoles(roleManager);
+                    DbInitializer.SeedUsers(userManager);
+
                 }
                 catch (Exception e){
                     var logger = services.GetRequiredService<ILogger<Program>>();

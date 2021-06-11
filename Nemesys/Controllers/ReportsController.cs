@@ -34,6 +34,8 @@ namespace Nemesys.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Index()
         {
             try
@@ -76,6 +78,8 @@ namespace Nemesys.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Details(int id) {
             try
             {
@@ -153,6 +157,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int id) {
             try
             {
@@ -197,6 +202,8 @@ namespace Nemesys.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromRoute] int id, [Bind("Id, Title, description, image, hazardTypeId")] CreateEditReportViewModel updatedReport) {
             try
             {
@@ -259,6 +266,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create() {
             try
             {
@@ -283,6 +291,8 @@ namespace Nemesys.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Title, dateTime, description, latitude, longitude, image, hazardTypeId,")] CreateEditReportViewModel newReport) {
             try
             {
