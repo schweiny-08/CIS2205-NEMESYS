@@ -34,7 +34,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Investigator, Admin")]
+        [Authorize]
         public IActionResult Index()
         {
             try
@@ -82,7 +82,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Investigator, Admin")]
+        [Authorize]
         public IActionResult Details(int id)
         {
             try
