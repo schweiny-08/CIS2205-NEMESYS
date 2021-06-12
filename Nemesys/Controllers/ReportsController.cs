@@ -94,7 +94,7 @@ namespace Nemesys.Controllers
                     {
                         model = new ReportViewModel()
                         {
-                            Id = report.idNum,
+                            Id = id,
                             Title = report.title,
                             dateTime = report.dateTime,
                             description = report.description,

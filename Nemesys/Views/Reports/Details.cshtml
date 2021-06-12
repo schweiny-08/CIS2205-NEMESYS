@@ -2,7 +2,6 @@
 @using Nemesys.Models
 
 @inject UserManager<ApplicationUser> UserManager
-@inject RoleManager<IdentityRole> RoleManager
 
 @model Nemesys.ViewModels.Reports.ReportViewModel
 
@@ -38,7 +37,9 @@
 <div>
     @if(User.IsInRole("Admin") || User.IsInRole("Investigator"))
     {
-        <a class="btn btn-primary" asp-controller="Investigations" asp-action="Create">Create Investigation</a>
+        @*<a class="btn btn-primary" asp-controller="Investigations" asp-action="Create">Create Investigation</a>*@
+        @Html.ActionLink("Create Investigation", "Create", "Investigations", new { reportId = Model.Id})
+        <br />
     }
 
     @if (UserManager.GetUserAsync(User).Result.Id == Model.Reporter.idNum )

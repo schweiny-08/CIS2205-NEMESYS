@@ -129,10 +129,11 @@ namespace Nemesys.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Investigator, Admin")]
-        public IActionResult Create()
+        public IActionResult Create(int reportId)
         {
             try
             {
+                TempData["reportId"] = reportId;
                 return View();
             }
             catch (Exception e) {
@@ -155,7 +156,8 @@ namespace Nemesys.Controllers
                         dateTime = newInvestigation.dateTime,
                         description = newInvestigation.description,
                         UserId = _userManager.GetUserId(User),
-                        reportId = 1 //hard coded
+                        reportId = (int)TempData["reportId"]
+                        //reportId = 1 //hard coded
                     };
 
                     int status = 0;
