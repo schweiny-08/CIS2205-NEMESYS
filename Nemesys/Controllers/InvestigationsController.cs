@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -33,6 +34,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Index()
         {
             try
@@ -80,6 +82,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Details(int id)
         {
             try
@@ -125,10 +128,12 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        [Authorize(Roles = "Investigator, Admin")]
+        public IActionResult Create(int reportId)
         {
             try
             {
+                TempData["reportId"] = reportId;
                 return View();
             }
             catch (Exception e) {
@@ -138,6 +143,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Investigator, Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id, dateTime, description, reportStatus, reportId")] CreateEditInvestigationViewModel newInvestigation)
         {
@@ -150,7 +156,8 @@ namespace Nemesys.Controllers
                         dateTime = newInvestigation.dateTime,
                         description = newInvestigation.description,
                         UserId = _userManager.GetUserId(User),
-                        reportId = 1 //hard coded
+                        reportId = (int)TempData["reportId"]
+                        //reportId = 1 //hard coded
                     };
 
                     int status = 0;
@@ -195,6 +202,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Investigator, Admin")]
         public IActionResult Edit(int id)
         {
             try
@@ -222,6 +230,7 @@ namespace Nemesys.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Investigator, Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id, dateTime, description, reportStatus")] CreateEditInvestigationViewModel updatedInvestigation)
         {
@@ -255,8 +264,8 @@ namespace Nemesys.Controllers
             }
         }
 
-        // POST: Investigations/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {

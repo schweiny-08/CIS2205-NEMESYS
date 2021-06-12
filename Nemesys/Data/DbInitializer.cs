@@ -51,5 +51,27 @@ namespace Nemesys.DAL
             }
             context.SaveChanges();
         }
+
+        public static void SeedUsers(UserManager<ApplicationUser> userManager)
+        {
+            if (!userManager.Users.Any())
+            {
+                var admin = new ApplicationUser()
+                {
+                    Email = "nemesysAdmin@gmail.com",
+                    NormalizedEmail = "NEMESYSADMIN@GMAIL.COM",
+                    UserName = "nemesysAdmin@gmail.com",
+                    NormalizedUserName = "NEMESYSADMIN@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    SecurityStamp = Guid.NewGuid().ToString("D")
+                };
+
+                IdentityResult result = userManager.CreateAsync(admin, "Password!123").Result;
+                if(result.Succeeded)
+                    userManager.AddToRoleAsync(admin, "Admin").Wait();
+            }
+        }
+
     }
 }

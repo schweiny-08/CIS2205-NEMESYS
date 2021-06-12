@@ -1,4 +1,9 @@
-﻿@model Nemesys.ViewModels.Reports.ReportViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using Nemesys.Models
+
+@inject UserManager<ApplicationUser> UserManager
+
+@model Nemesys.ViewModels.Reports.ReportViewModel
 
 @{
     ViewData["Title"] = "Report Details";
@@ -30,11 +35,25 @@
     <div id="map"></div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <br />
+    @if(User.IsInRole("Admin") || User.IsInRole("Investigator"))
+    {
+        @*<a class="btn btn-primary" asp-controller="Investigations" asp-action="Create">Create Investigation</a>*@
+        @Html.ActionLink("Create Investigation", "Create", "Investigations", new { reportId = Model.Id})
+        <br />
+    }
+
+    @if (UserManager.GetUserAsync(User).Result.Id == Model.Reporter.idNum )
+    {
+        <a asp-controller="Reports" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <br />
+    }
+    @if (UserManager.GetUserAsync(User).Result.Id == Model.Reporter.idNum || User.IsInRole("Admin")) 
+    { 
+        <a asp-controller="Reports" asp-action="Delete" asp-route-id="@Model.Id" class="text-danger">Delete Report</a>
+        <br />
+    }
     <a asp-action="Index">Back to List</a>
-    <br />
-    <a asp-action="Delete" asp-route-id="@Model.Id" class="text-danger">Delete Report</a>
+
 </div>
 
 <script type="text/javascript">

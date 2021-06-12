@@ -1,4 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Nemesys.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+ 
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -8,10 +13,14 @@
     <h3 class="display-1">Nemesys</h3>
     <h4 class="h2">Near Miss Exposure and Reporting System!</h4>
     <p>Report or view reports about any hazards on campus!</p>
-    <!--<button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='<%= Url.Action("Login", "HomeController")%>';">Login</button>-->
-    <a class="btn btn-primary btn-lg"  asp-area="" asp-controller="Account" asp-action="Login">Login</a>
 
-    <!--<button type="button" class="btn btn-primary btn-lg">Register</button>-->
-    <a class="btn btn-primary btn-lg" value="Register" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+    }
+    else
+    {
+        <a class="btn btn-primary" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-primary" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    }
 </div>
 
