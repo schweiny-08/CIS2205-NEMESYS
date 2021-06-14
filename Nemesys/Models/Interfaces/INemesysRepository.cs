@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Nemesys.Models.Interfaces
 {
@@ -13,7 +14,7 @@ namespace Nemesys.Models.Interfaces
         // Reports
 
         IEnumerable<Report> GetAllReports();
-        IEnumerable<Report> GetReportsByOwner(ApplicationUser reporter);
+        IEnumerable<Report> GetReportsByOwner(string Id);
         Report GetReportById(int idNum);
         //Report GetReportByOwner(int idNm,int userId);
         void AddNewReport(Report report);
@@ -28,7 +29,7 @@ namespace Nemesys.Models.Interfaces
         // Investigations
 
         IEnumerable<Investigation> GetAllInvestigations();
-        IEnumerable<Investigation> GetInvestigationsByOwner(ApplicationUser investigator);
+        IEnumerable<Investigation> GetInvestigationsByOwner(string Id);
         Investigation GetInvestigationById(int idNum);
         void AddNewInvestigation(Investigation investigation);
         void UpdateInvestigation(Investigation investigation);
@@ -40,9 +41,15 @@ namespace Nemesys.Models.Interfaces
         void AddNewHazardType(HazardType hazardType);
         void DeleteHazardType(HazardType hazardType);
 
+        // Users
+        ApplicationUser GetUserByEmail(string email);
+
         // Roles
-      /*  IEnumerable<IdentityRole> GetAllUserRoles();
-        IEnumerable<ApplicationUser> GetUsersByRoles();
-        void AddNewRole();*/
+        IEnumerable<IdentityRole> GetAllUserRoles();
+        //IEnumerable<ApplicationUser> GetUsersByRoles();
+        Task<IdentityResult> AddNewRole(IdentityRole role);
+        string GetRoleNameById(string roleId);
+        void ChangeUserRole(ApplicationUser user, string newRole);
+        string GetRoleNameByUser(ApplicationUser user);
     }
 }

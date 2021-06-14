@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Nemesys.Models
+
+@inject UserManager<ApplicationUser> UserManager
+
+@model Nemesys.ViewModels.Users.ProfilePageViewModel
+
+@{
+    ViewData["Title"] = Model.email + "'s Profile Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card text-center jumbotron-fluid">
+    <div class="card-body">
+        <h1 class="card-title">@ViewData["Title"]</h1>
+        <p class="card-text">@Model.faculty</p>
+        <h2 class="card-subtitle">User's Reports</h2>
+
+        <a class="btn btn-primary" asp-controller="User" asp-action="Reports" asp-route-id="@Model.idNum">Reports</a>
+        @if (Model.role == "Investigator" || Model.role == "Admin")
+        {
+            // If a user is removed from investigator role, this won't show up but investigations will still show
+            <h2 class="card-subtitle">User's Investigations</h2>
+            <a class="btn btn-primary" asp-controller="User" asp-action="Investigations" asp-route-id="@Model.idNum">Investigations</a>
+        }
+    </div>
+</div>

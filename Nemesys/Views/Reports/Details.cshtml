@@ -24,7 +24,8 @@
         {
             <a asp-controller="Investigations" asp-action="Details" asp-route-id="@Model.investigation.Id">View Investigation</a>
         }
-        <p class="small">Reporter: <a asp-area="Identity" asp-page="/Account/Manage/Index">@Model.Reporter.email</a></p>
+        @*<p class="small">Reporter: <a asp-controller="User" asp-action="ProfilePage" asp-route="@Model.Reporter.email">@Model.Reporter.email</a></p>*@
+        <p class="small">Reporter: @Html.ActionLink(Model.Reporter.email, "ProfilePage", "User", new { email = Model.Reporter.email}, null) </p>
     </div>
     <img class="card-img-bottom" src="@Model.image" alt="Image for @Model.Title" style="
         width: 33%;

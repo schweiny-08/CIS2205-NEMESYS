@@ -42,12 +42,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Investigations" asp-action="Index">Investigations</a>
                             </li>
-                            @if (User.IsInRole("Admin")) 
-                            {
-                               <li>
-                                    Admin stuff goes here
-                               </li>
-                            }
                          }
                         </ul>
                     <partial name="_LoginPartial" />

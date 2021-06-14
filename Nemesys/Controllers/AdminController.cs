@@ -7,30 +7,122 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Nemesys.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
+using Nemesys.Models;
+using Nemesys.Models.Interfaces;
 
 namespace Nemesys.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
+        private readonly INemesysRepository _nemesysRepository;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, ILogger<AdminController> logger)
+        public AdminController(ILogger<AdminController> logger, INemesysRepository nemesysRepository)
         {
-            _roleManager = roleManager;
+            //_roleManager = roleManager;
             _logger = logger;
+            _nemesysRepository = nemesysRepository;
+            //_userManager = userManager;
         }
 
-        [Authorize(Roles ="Admin")]
         [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Index() {
+            try
+            {
+                return View();
+            }
+            catch (Exception e) 
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AddUserToRole() {
+            try
+            {
+                var userRoleList = _nemesysRepository.GetAllUserRoles().Select(r => new RoleViewModel() 
+                { 
+                    Id = r.Id,
+                    RoleName = r.NormalizedName
+                }).ToList();
+
+                var model = new AddUserToRoleViewModel() 
+                { 
+                    UserRoleList = userRoleList
+                };
+
+                return View(model);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AddUserToRole([Bind("userEmail, RoleId")] AddUserToRoleViewModel userToRole) {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ApplicationUser user = _nemesysRepository.GetUserByEmail(userToRole.userEmail);
+                    string newRole = _nemesysRepository.GetRoleNameById(userToRole.RoleId);
+                    if (user != null && newRole != null)
+                    {
+                        _nemesysRepository.ChangeUserRole(user, newRole);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        var userRoleList = _nemesysRepository.GetAllUserRoles().Select(r => new RoleViewModel()
+                        {
+                            Id = r.Id,
+                            RoleName = r.NormalizedName
+                        }).ToList();
+
+                        userToRole.UserRoleList = userRoleList;
+
+                        return View(userToRole);
+                    }
+                }
+                else
+                {
+                    var userRoleList = _nemesysRepository.GetAllUserRoles().Select(r => new RoleViewModel()
+                    {
+                        Id = r.Id,
+                        RoleName = r.Name
+                    }).ToList();
+
+                    userToRole.UserRoleList = userRoleList;
+
+                    return View(userToRole);
+                }
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult AllRoles()
         {
             try
             {
                 var model = new ListRolesViewModel()
                 {
-                    TotalEntries = _roleManager.Roles.Count(),
-                    UserRoles = _roleManager.Roles.Select(r => new RoleViewModel()
+                    TotalEntries = _nemesysRepository.GetAllUserRoles().Count(),
+                    UserRoles = _nemesysRepository.GetAllUserRoles().Select(r => new RoleViewModel()
                     { 
                         Id = r.Id,
                         RoleName = r.Name
@@ -45,8 +137,8 @@ namespace Nemesys.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRole() 
         {
             try
@@ -60,9 +152,9 @@ namespace Nemesys.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateRole([Bind("Id, RoleName")] CreateRoleViewModel newRole)
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateRole([Bind("Id, RoleName")] CreateRoleViewModel newRole)
         {
             try
             {
@@ -73,7 +165,7 @@ namespace Nemesys.Controllers
                         Name = newRole.RoleName
                     };
 
-                    IdentityResult result = await _roleManager.CreateAsync(identityRole);
+                    IdentityResult result = _nemesysRepository.AddNewRole(identityRole).Result;
 
                     if (result.Succeeded)
                     {

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace Nemesys.Models.Repositories
 {
@@ -17,13 +17,17 @@ namespace Nemesys.Models.Repositories
     {
         private readonly NemesysContext _nemesysContext;
         private readonly ILogger _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public NemesysRepository(NemesysContext nemesysContext, ILogger<NemesysRepository> logger)
+        public NemesysRepository(NemesysContext nemesysContext, ILogger<NemesysRepository> logger, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             try
             {
                 _nemesysContext = nemesysContext;
                 _logger = logger;
+                _roleManager = roleManager;
+                _userManager = userManager;
             }
             catch (Exception e)
             {
@@ -46,11 +50,11 @@ namespace Nemesys.Models.Repositories
             }
         }
 
-        public IEnumerable<Report> GetReportsByOwner(ApplicationUser reporter)
+        public IEnumerable<Report> GetReportsByOwner(string Id)
         {
             try
             {
-                return _nemesysContext.Reports.Include(r => r.hazardType).Include(r => r.investigation).Where(r => r.User == reporter);
+                return _nemesysContext.Reports.Include(r => r.hazardType).Include(r => r.investigation).Where(r => r.User.Id == Id);
             }
             catch (Exception e) {
                 _logger.LogError(e.Message);
@@ -215,11 +219,11 @@ namespace Nemesys.Models.Repositories
             }
         }
 
-        public IEnumerable<Investigation> GetInvestigationsByOwner(ApplicationUser investigator)
+        public IEnumerable<Investigation> GetInvestigationsByOwner(string Id)
         {
             try
             {
-                return _nemesysContext.Investigations.Include(i => i.report).Where(i => i.User == investigator);
+                return _nemesysContext.Investigations.Include(i => i.report).Where(i => i.User.Id == Id);
             }
             catch (Exception e) {
                 _logger.LogError(e.Message);
@@ -341,10 +345,90 @@ namespace Nemesys.Models.Repositories
             }
         }
 
-       /* // Roles
-        public IEnumerable<IdentityRole> GetAllUserRoles()
+        // Users
+        public ApplicationUser GetUserByEmail(string email)
         {
+            try
+            {
+                ApplicationUser user = _userManager.FindByEmailAsync(email).Result;
+                return user;
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
 
-        }*/
+        // Roles
+        public IEnumerable<IdentityRole> GetAllUserRoles()
+         {
+            try
+            {
+                return _roleManager.Roles.ToList();
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+         }
+
+        public async Task<IdentityResult> AddNewRole(IdentityRole role)
+        {
+            try
+            {
+                return await _roleManager.CreateAsync(role);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        public string GetRoleNameById(string roleId)
+        {
+            try
+            {
+                return _roleManager.FindByIdAsync(roleId).Result.Name.ToString();
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        public void ChangeUserRole(ApplicationUser user, string newRole) {
+
+            try
+            {
+                // Remove from old role
+                string oldRole = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+                _userManager.RemoveFromRoleAsync(user, oldRole).Wait();
+
+                // Add to new role
+                _userManager.AddToRoleAsync(user, newRole).Wait();
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        public string GetRoleNameByUser(ApplicationUser user)
+        {
+            try
+            {
+                return _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
     }
 }

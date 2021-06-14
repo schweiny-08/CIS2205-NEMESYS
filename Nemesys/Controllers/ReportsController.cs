@@ -293,7 +293,7 @@ namespace Nemesys.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title, dateTime, description, latitude, longitude, image, hazardTypeId,")] CreateEditReportViewModel newReport) {
+        public IActionResult Create([Bind("Title, dateTime, description, latitude, longitude, image, hazardTypeId")] CreateEditReportViewModel newReport) {
             try
             {
                 if (ModelState.IsValid)
