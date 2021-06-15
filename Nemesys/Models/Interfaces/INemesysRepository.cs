@@ -15,6 +15,7 @@ namespace Nemesys.Models.Interfaces
 
         IEnumerable<Report> GetAllReports();
         IEnumerable<Report> GetReportsByOwner(string Id);
+        IEnumerable<Report> GetReportsInPastYear();
         Report GetReportById(int idNum);
         //Report GetReportByOwner(int idNm,int userId);
         void AddNewReport(Report report);
@@ -43,6 +44,7 @@ namespace Nemesys.Models.Interfaces
 
         // Users
         IEnumerable<ApplicationUser> GetUsersByRole(string role);
+        IEnumerable<ApplicationUser> GetAllUsers();
         ApplicationUser GetUserByEmail(string email);
 
         // Roles

@@ -396,5 +396,22 @@ namespace Nemesys.Controllers
                 return View("Error");
             }
         }
+    
+        //[HttpPost]
+        [Authorize]
+        public IActionResult Upvote(int id)
+        {
+            try
+            {
+                _nemesysRepository.UpvoteReport(id);
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
     }
 }

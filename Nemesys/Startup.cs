@@ -72,6 +72,8 @@ namespace Nemesys
                 options.SlidingExpiration = true;
             });
 
+            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
+
             services.AddTransient<INemesysRepository, NemesysRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

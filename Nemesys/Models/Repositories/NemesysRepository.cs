@@ -62,6 +62,18 @@ namespace Nemesys.Models.Repositories
             }
         }
 
+        public IEnumerable<Report> GetReportsInPastYear() {
+            try
+            {
+                return _nemesysContext.Reports.Where(r => r.dateTime <= DateTime.Now && r.dateTime.Year >= DateTime.Now.Year-1);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
         public Report GetReportById(int idNum)
         {
             try
@@ -352,6 +364,17 @@ namespace Nemesys.Models.Repositories
             {
                 ApplicationUser user = _userManager.FindByEmailAsync(email).Result;
                 return user;
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+        public IEnumerable<ApplicationUser> GetAllUsers() {
+            try
+            {
+                return _userManager.Users;
             }
             catch(Exception e)
             {

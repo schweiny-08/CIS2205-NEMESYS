@@ -152,5 +152,32 @@ namespace Nemesys.Controllers
                 return View("Error");
             }
         }
+
+       /* public IActionResult HallOfFame()
+        {
+            try
+            {
+                var reports = _nemesysRepository.GetReportsInPastYear();
+
+                var users = _nemesysRepository
+                    .GetAllUsers()
+                    .Select(u => _nemesysRepository.GetReportsByOwner(u.Id));
+
+                var model = new ListReportersViewModel()
+                {
+                    TotalEntries = users.Count(),
+                    Reporters = new ReporterViewModel() 
+                    {
+                        
+                    }
+                };
+
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }*/
     }
 }
