@@ -11,12 +11,12 @@
 
 <div class="row">
     @foreach (var investiagiton in Model.Investigations)
-    { 
+    {
         <div class="card" style="width: 18rem; padding: 20px; margin: 20px">
             <div class="card-body">
                 <h3 class="card-title">Investigation for: @investiagiton.report.Title</h3>
-                @*<p class="small">Report by: @investiagiton.report.Reporter.email</p>*@
-                <p class="small">Investigation by: @investiagiton.investigator.fName @investiagiton.investigator.lName</p>
+                @*<p class="small">Report by: @Html.ActionLink(investiagiton.report.Reporter.email, "ProfilePage", "User", new { id = investiagiton.report.Reporter.email})</p>*@
+                <p class="small">Investigation by: @investiagiton.investigator.email</p>
             </div>
             <a asp-controller="Investigations" asp-action="Details" asp-route-id="@investiagiton.Id" class="btn btn-primary">Investigation Details</a>
         </div>    

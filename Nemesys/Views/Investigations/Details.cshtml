@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.investigator)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.investigator.email)
+            <p>@Html.ActionLink(Model.investigator.email, "ProfilePage", "User", new { email = Model.investigator.email });</p>
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.report)

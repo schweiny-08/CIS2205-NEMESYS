@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemesys.DAL;
 
 namespace Nemesys.Migrations
 {
     [DbContext(typeof(NemesysContext))]
-    partial class NemesysContextModelSnapshot : ModelSnapshot
+    [Migration("20210614230635_added_name_to_user_class")]
+    partial class added_name_to_user_class
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "All Investigations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row d-flex justify-content-around">
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="AllRoles">View All User Roles</a>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateRole">Create User Role</a>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="AddUserToRole">Add User To Role</a>
+</div>
+<div class="row d-flex justify-content-around">
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="AllReporters">View All Reporters</a>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="AllInvestigators">View All Investigators</a>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="AllAdmins">View All Admins</a>
+</div>
