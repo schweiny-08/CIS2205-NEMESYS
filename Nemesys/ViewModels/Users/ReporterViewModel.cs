@@ -14,5 +14,6 @@ namespace Nemesys.ViewModels.Users
         public string fName { get; set; }
         public string lName { get; set; }
         public string imageUrl { get; set; }
+        public int numOfReports { get; set; }
     }
 }
