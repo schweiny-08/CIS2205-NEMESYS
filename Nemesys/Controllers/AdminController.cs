@@ -9,6 +9,7 @@ using Nemesys.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Nemesys.Models;
 using Nemesys.Models.Interfaces;
+using Nemesys.ViewModels.Users;
 
 namespace Nemesys.Controllers
 {
@@ -187,6 +188,94 @@ namespace Nemesys.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AllReporters()
+        {
+            try
+            {
+                var users = _nemesysRepository.GetUsersByRole("Reporter");
+                var count = users.Count();
+                var rep = users.Select(u => new ReporterViewModel()
+                {
+                    idNum = u.Id,
+                    email = u.Email,
+                    fName = u.fName,
+                    lName = u.lName
+                });
+                var model = new ListReportersViewModel()
+                {
 
+                    TotalEntries = users.Count(),
+                    Reporters = rep
+                };
+                return View(model);
+            }   
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AllAdmins()
+        {
+            try
+            {
+                var users = _nemesysRepository.GetUsersByRole("Admin");
+                var count = users.Count();
+                var rep = users.Select(u => new InvestigatorViewModel()
+                {
+                    idNum = u.Id,
+                    email = u.Email,
+                    fName = u.fName,
+                    lName = u.lName
+                });
+                var model = new ListAdminsViewModel()
+                {
+
+                    TotalEntries = users.Count(),
+                    Admins = rep
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AllInvestigators()
+        {
+            try
+            {
+                var users = _nemesysRepository.GetUsersByRole("Investigator");
+                var count = users.Count();
+                var rep = users.Select(u => new InvestigatorViewModel()
+                {
+                    idNum = u.Id,
+                    email = u.Email,
+                    fName = u.fName,
+                    lName = u.lName
+                });
+                var model = new ListInvestigatorsViewModel()
+                {
+
+                    TotalEntries = users.Count(),
+                    Invetigators = rep
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message, e.Data);
+                return View("Error");
+            }
+        }
     }
 }

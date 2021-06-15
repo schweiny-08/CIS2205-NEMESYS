@@ -360,6 +360,19 @@ namespace Nemesys.Models.Repositories
             }
         }
 
+        public IEnumerable<ApplicationUser> GetUsersByRole(string role)
+        {
+            try
+            {
+                return _userManager.Users.ToList().Where(u => GetRoleNameByUser(u) == role);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
         // Roles
         public IEnumerable<IdentityRole> GetAllUserRoles()
          {

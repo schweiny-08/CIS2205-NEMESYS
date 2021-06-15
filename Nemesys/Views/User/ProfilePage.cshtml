@@ -15,6 +15,7 @@
     <div class="card-body">
         <h1 class="card-title">@ViewData["Title"]</h1>
         <p class="card-text">@Model.faculty</p>
+        <p class="card-text">@Model.fName @Model.lName</p>
         <h2 class="card-subtitle">User's Reports</h2>
 
         <a class="btn btn-primary" asp-controller="User" asp-action="Reports" asp-route-id="@Model.idNum">Reports</a>

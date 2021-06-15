@@ -62,6 +62,9 @@ namespace Nemesys.DAL
                     NormalizedEmail = "NEMESYSADMIN@GMAIL.COM",
                     UserName = "nemesysAdmin@gmail.com",
                     NormalizedUserName = "NEMESYSADMIN@GMAIL.COM",
+                    PhoneNumber = "79290311",
+                    fName = "Nemesys",
+                    lName = "Admin",
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                     SecurityStamp = Guid.NewGuid().ToString("D")

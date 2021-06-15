@@ -48,6 +48,8 @@ namespace Nemesys.Controllers
                         idNum = user.Id,
                         email = user.Email,
                         faculty = user.faculty,
+                        fName = user.fName,
+                        lName = user.lName,
                         role = _nemesysRepository.GetRoleNameByUser(user)
                     };
                     return View(model);

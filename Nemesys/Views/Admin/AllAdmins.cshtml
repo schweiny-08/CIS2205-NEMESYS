@@ -1,0 +1,23 @@
+﻿@model Nemesys.ViewModels.Admin.ListAdminsViewModel
+@{
+    ViewData["Title"] = "All User Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h2>Showing @Model.TotalEntries admins.</h2>
+
+<div class="row">
+    @foreach (var users in Model.Admins)
+    {
+        <div class="card" style="width: 18rem; padding: 20px; margin: 20px">
+            <div class="card-body">
+                <h3 class="card-title">@users.fName @users.lName</h3>
+                <div class="card-body">
+                    <p class="card-text">@Html.ActionLink(users.email, "ProfilePage", "User", new { email = users.email })</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

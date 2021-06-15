@@ -42,6 +42,7 @@ namespace Nemesys.Models.Interfaces
         void DeleteHazardType(HazardType hazardType);
 
         // Users
+        IEnumerable<ApplicationUser> GetUsersByRole(string role);
         ApplicationUser GetUserByEmail(string email);
 
         // Roles
