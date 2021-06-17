@@ -52,8 +52,8 @@ namespace Nemesys.Controllers
                         description = i.description,
                         investigator = new InvestigatorViewModel()
                         {
-                            idNum = i.UserId,
-                            email = _userManager.FindByIdAsync(i.UserId).Result.Email,
+                            idNum = (_userManager.FindByIdAsync(i.UserId).Result != null) ? _userManager.FindByIdAsync(i.UserId).Result.Id : "Anonymous",
+                            email = (_userManager.FindByIdAsync(i.UserId).Result != null) ? _userManager.FindByIdAsync(i.UserId).Result.Email : "Anonymous",
                             fName = (_userManager.FindByIdAsync(i.UserId).Result != null) ? _userManager.FindByIdAsync(i.UserId).Result.UserName : "Anonymous"
                             //lName = i.investigator.lName,
                             //imageUrl = i.investigator.image,
@@ -100,8 +100,8 @@ namespace Nemesys.Controllers
                         description = investigation.description,
                         investigator = new InvestigatorViewModel()
                         {
-                            idNum = investigation.UserId,
-                            email = _userManager.FindByIdAsync(investigation.UserId).Result.Email,
+                            idNum = (_userManager.FindByIdAsync(investigation.UserId).Result != null) ? _userManager.FindByIdAsync(investigation.UserId).Result.Id : "Anonymous",
+                            email = (_userManager.FindByIdAsync(investigation.UserId).Result != null) ? _userManager.FindByIdAsync(investigation.UserId).Result.Email : "Anonymous",
                             fName = (_userManager.FindByIdAsync(investigation.UserId).Result != null) ? _userManager.FindByIdAsync(investigation.UserId).Result.UserName : "Anonymous"  
                         },
                         report = new ReportViewModel()

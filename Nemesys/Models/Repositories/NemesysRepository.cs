@@ -208,6 +208,17 @@ namespace Nemesys.Models.Repositories
         {
             try
             {
+                // Delete all report connections
+                report.User = null;
+                report.UserId = null;
+                report.investigation = null;
+                report.investidationId = 0;
+                report.hazardType = null;
+                report.hazardTypeId = 0;
+
+                _nemesysContext.Entry(report).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+
                 _nemesysContext.Reports.Remove(report);
                 _nemesysContext.SaveChanges();
             }
@@ -295,6 +306,14 @@ namespace Nemesys.Models.Repositories
         {
             try
             {
+                investigation.report = null;
+                investigation.reportId = 0;
+                investigation.User = null;
+                investigation.UserId = null;
+
+                _nemesysContext.Entry(investigation).State = EntityState.Modified;
+                _nemesysContext.SaveChanges();
+
                 _nemesysContext.Investigations.Remove(investigation);
                 _nemesysContext.SaveChanges();
             }

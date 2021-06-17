@@ -65,8 +65,8 @@ namespace Nemesys.Controllers
                         status = r.status.ToString(),
                         Reporter = new ReporterViewModel()
                         {
-                            idNum = r.UserId,
-                            email = _userManager.FindByIdAsync(r.UserId).Result.Email
+                            idNum = (_userManager.FindByIdAsync(r.UserId).Result != null) ? _userManager.FindByIdAsync(r.UserId).Result.Id : "Anonymous",
+                            email = (_userManager.FindByIdAsync(r.UserId).Result != null) ? _userManager.FindByIdAsync(r.UserId).Result.Email : "Anonymous"
                         }
                     })
                 };
@@ -141,8 +141,8 @@ namespace Nemesys.Controllers
                             },
                             Reporter = new ReporterViewModel()
                             {
-                                idNum = report.UserId,
-                                email = _userManager.FindByIdAsync(report.UserId).Result.Email
+                                idNum = (_userManager.FindByIdAsync(report.UserId).Result != null) ? _userManager.FindByIdAsync(report.UserId).Result.Id : "Anonymous",
+                                email = (_userManager.FindByIdAsync(report.UserId).Result != null) ? _userManager.FindByIdAsync(report.UserId).Result.Email : "Anonymous"
                             }
                         };
                     }

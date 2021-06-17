@@ -4,8 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Nemesys.DAL;
 using Nemesys.Models;
+using Nemesys.Models.Interfaces;
 
 namespace Nemesys.Areas.Identity.Pages.Account.Manage
 {
@@ -14,15 +17,21 @@ namespace Nemesys.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly INemesysRepository _nemesysRepository;
+        private readonly NemesysContext _nemesysContext;
 
         public DeletePersonalDataModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            INemesysRepository nemesysRepository,
+            NemesysContext nemesysContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _nemesysRepository = nemesysRepository;
+            _nemesysContext = nemesysContext;
         }
 
         [BindProperty]
@@ -64,6 +73,32 @@ namespace Nemesys.Areas.Identity.Pages.Account.Manage
                 {
                     ModelState.AddModelError(string.Empty, "Incorrect password.");
                     return Page();
+                }
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, _userManager.GetRolesAsync(user).Result.ToString());
+
+            var reports = _nemesysRepository.GetReportsByOwner(user.Id);
+            if (reports != null) {
+                foreach (var rep in reports) {
+                    rep.User = null;
+                    rep.UserId = null;
+                    
+                    _nemesysContext.Entry(rep).State = EntityState.Modified;
+                    //_nemesysContext.SaveChanges();
+                }
+            }
+
+            var investigations = _nemesysRepository.GetInvestigationsByOwner(user.Id);
+            if(investigations != null)
+            {
+                foreach(var inv in investigations)
+                {
+                    inv.User = null;
+                    inv.UserId = null;
+
+                    _nemesysContext.Entry(inv).State = EntityState.Modified;
+                    //_nemesysContext.SaveChanges();
                 }
             }
 
